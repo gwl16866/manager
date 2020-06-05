@@ -1,8 +1,12 @@
 package com.hy.manager.mapper.order;
 
-import com.hy.manager.entity.order.Returnthings;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.hy.manager.entity.order.Returnthings;
+import com.hy.manager.mapper.order.Dao.ReturnThingsDao;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.SelectProvider;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,5 +18,9 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface ReturnthingsMapper extends BaseMapper<Returnthings> {
+
+    //退货列表
+    @SelectProvider(type = ReturnThingsDao.class, method = "selectReturnThings")
+    public List<Returnthings> selectReturnThings(String serverNumber,String nameOrPhone,String time);
 
 }

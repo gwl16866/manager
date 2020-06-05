@@ -1,7 +1,6 @@
 package com.hy.manager.entity.counts;
 
 import lombok.Data;
-
 import java.io.Serializable;
 
 /**
@@ -25,9 +24,23 @@ public class Quantity implements Serializable {
 
     private Integer userId;
 
+    //库存类型
     private String controlClass;
 
     private Integer status;
 
+    //库存操作时间
+    private String quantityTime;
 
+    //商品图片
+    private String image;
+
+    //商品名称
+    private String productName;
+
+    //商品货号
+    private String productNumber;
+
+    //订单编号
+    private String orderNumber;
 }

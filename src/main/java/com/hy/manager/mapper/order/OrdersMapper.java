@@ -1,8 +1,12 @@
 package com.hy.manager.mapper.order;
 
-import com.hy.manager.entity.order.Orders;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.hy.manager.entity.order.Orders;
+import com.hy.manager.mapper.order.Dao.OrderDao;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.SelectProvider;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,5 +18,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface OrdersMapper extends BaseMapper<Orders> {
-
+    //订单列表
+    @SelectProvider(type = OrderDao.class, method = "selectOrders")
+    public List<Orders> selectOrders(String orderOrProduct,String nameOrPhone,String time);
 }
