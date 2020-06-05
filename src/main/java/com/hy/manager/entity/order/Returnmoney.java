@@ -2,13 +2,12 @@ package com.hy.manager.entity.order;
 
 import lombok.Data;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author gwl
@@ -21,6 +20,7 @@ public class Returnmoney implements Serializable {
 
     private String serverNumber;
 
+    //申请时间
     private String applyTime;
 
     private Integer userId;
@@ -37,5 +37,19 @@ public class Returnmoney implements Serializable {
 
     private String linkMan;
 
+    private String reason;
 
+    //客户账号
+    private String account;
+
+    //客户姓名
+    private String name;
+
+    //订单账号
+    private String orderNumber;
+
+    //客户手机号
+    private String phoneNo;
+
+    private BigDecimal sumMoney;
 }
