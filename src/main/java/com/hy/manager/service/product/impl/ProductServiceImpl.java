@@ -1,10 +1,14 @@
 package com.hy.manager.service.product.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hy.manager.entity.product.ClassesBo;
 import com.hy.manager.entity.product.Product;
 import com.hy.manager.mapper.product.ProductMapper;
 import com.hy.manager.service.product.IProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -16,5 +20,17 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> implements IProductService {
+    @Autowired
+    private ProductMapper productMapper;
 
+
+    @Override
+    public List<Product> selectProductList(Product product) {
+        return productMapper.selectProductList(product);
+    }
+
+    @Override
+    public List<ClassesBo> selectClasses() {
+        return productMapper.selectClasses();
+    }
 }
