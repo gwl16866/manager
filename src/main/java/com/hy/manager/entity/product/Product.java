@@ -55,5 +55,9 @@ public class Product implements Serializable {
 
     private Integer images;
 
+    private Integer classes;
+
+    private String className;
+
 
 }
