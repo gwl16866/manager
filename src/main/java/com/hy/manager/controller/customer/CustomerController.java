@@ -2,6 +2,7 @@ package com.hy.manager.controller.customer;
 
 
 import com.hy.manager.entity.customer.Customer;
+import com.hy.manager.entity.customer.customerOrderProduct;
 import com.hy.manager.service.customer.ICustomerService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,10 +36,54 @@ public class CustomerController {
     }
 
     @CrossOrigin
+    @ResponseBody
+    @RequestMapping("/userselect")
+    public List<Customer> userselect(String id){
+
+        return customerService.userselect(id);
+    }
+
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping("/addselect")
+    public List<Customer> addselect(String id){
+
+        return customerService.addselect(id);
+    }
+
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping("/orderselect")
+    public List<customerOrderProduct> orderselect(String id){
+        System.out.println(id);
+        return customerService.orderselect(id);
+    }
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping("/ordersselect")
+    public List<customerOrderProduct> ordersselect(String id){
+        return customerService.ordersselect(id);
+    }
+
+    @CrossOrigin
     @RequestMapping("/upd")
     public void upd(Customer customer){
         customerService.upd(customer);
     }
+
+    @CrossOrigin
+    @RequestMapping("/custupd")
+    public void custupd(Customer customer){
+        customerService.custupd(customer);
+    }
+
+    @CrossOrigin
+    @RequestMapping("/addupd")
+    public void addupd(Customer customer){
+        customerService.addupd(customer);
+    }
+
+
 
     @CrossOrigin
     @RequestMapping("/del")

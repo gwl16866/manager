@@ -46,6 +46,18 @@ public class Customer implements Serializable {
 
     private Integer status;
 
+    private Integer sex;
+
+    private Integer coding;
+
+    public Integer getSex() {
+        return sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -132,5 +144,13 @@ public class Customer implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getCoding() {
+        return coding;
+    }
+
+    public void setCoding(Integer coding) {
+        this.coding = coding;
     }
 }
