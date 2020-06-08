@@ -27,4 +27,9 @@ public interface IReturnmoneyService extends IService<Returnmoney> {
     //删除退款原因
     public void deleteReason(Integer id);
 
+    //修改退款原因
+    public void updateReason(Integer id,String reason);
+
+    //新增退款原因
+    public void addReason(String reason);
 }
