@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 public class Returnthings implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+private Integer id;
     private String serverNumber;
 
     private String applyTime;
@@ -49,4 +49,16 @@ public class Returnthings implements Serializable {
     private String phoneNo;
 
     private BigDecimal sumMoney;
+    //图片
+    private String image;
+    private String productName;
+    private BigDecimal price;
+    //商品规格
+    private String productModel;
+    //商品颜色
+    private String productColor;
+    //商品货号
+    private String productNumber;
+    //地址
+    private String address;
 }

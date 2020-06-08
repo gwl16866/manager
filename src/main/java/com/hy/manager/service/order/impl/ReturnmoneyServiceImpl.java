@@ -42,4 +42,15 @@ public class ReturnmoneyServiceImpl extends ServiceImpl<ReturnmoneyMapper, Retur
     public void deleteReason(Integer id){
         returnmoneyMapper.deleteReason(id);
     }
+
+    //修改退款原因
+    public void updateReason(Integer id,String reason){
+        returnmoneyMapper.updateReason(id,reason);
+    }
+
+
+    //新增退款原因
+    public void addReason(String reason){
+        returnmoneyMapper.addReason(reason);
+    }
 }

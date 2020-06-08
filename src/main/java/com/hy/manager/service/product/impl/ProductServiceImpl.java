@@ -33,4 +33,34 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
     public List<ClassesBo> selectClasses() {
         return productMapper.selectClasses();
     }
+
+    @Override
+    public Integer updateUpStatusById(Product product) {
+        return productMapper.updateUpStatusById(product);
+    }
+
+    @Override
+    public Integer updateStatusById(Product product) {
+        return productMapper.updateStatusById(product);
+    }
+
+    @Override
+    public Integer deleteProductById(Integer id) {
+        return productMapper.deleteProductById(id);
+    }
+
+    @Override
+    public Integer updateUpStatusProvider(String[] ids, String type) {
+        return productMapper.updateUpStatusProvider(ids,type);
+    }
+
+    @Override
+    public Integer updateStatusProvider(String[] ids, String type) {
+        return productMapper.updateStatusProvider(ids,type);
+    }
+
+    @Override
+    public Product queryProductById(Integer pid) {
+        return productMapper.queryProductById(pid);
+    }
 }

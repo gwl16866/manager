@@ -2,7 +2,7 @@ package com.hy.manager.mapper.order.Dao;
 
 public class ReturnMoneyDao {
     public String selectReturnMoney(String serverNumber,Integer applyStatus,String time) {
-        StringBuffer sql = new StringBuffer("select ry.*,rn.reason,c.*,o.* from returnmoney ry,returnreason rn, customer c,orders o where ry.returnReason=rn.id  and ry.userId=c.id and o.id=ry.orderId and 1=1 ");
+        StringBuffer sql = new StringBuffer("select ry.*,rn.reason,c.*,o.*,p.* from returnmoney ry,returnreason rn, customer c,orders o,product p where ry.returnReason=rn.id  and ry.userId=c.id and o.id=ry.orderId and ry.pid=p.pid and 1=1 ");
         //退款单号
         if (null != serverNumber && serverNumber !="") {
             sql.append(" and ry.serverNumber like '%" + serverNumber + "%'");

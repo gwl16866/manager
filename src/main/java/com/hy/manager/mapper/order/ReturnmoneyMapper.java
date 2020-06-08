@@ -4,10 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hy.manager.entity.order.Returnmoney;
 import com.hy.manager.entity.order.Returnreason;
 import com.hy.manager.mapper.order.Dao.ReturnMoneyDao;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.SelectProvider;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -38,5 +35,12 @@ public interface ReturnmoneyMapper extends BaseMapper<Returnmoney> {
     @Update("delete from returnreason  where id=#{id}")
     public void deleteReason(Integer id);
 
+    //修改退款原因
+    @Update("update returnreason set reason=#{reason} where id=#{id}")
+    public void updateReason(Integer id,String reason);
+
+    //新增退款原因
+    @Insert("insert into returnreason(reason,reasonTime,reasonStatus) values (#{reason},now(),1)")
+    public void addReason(String reason);
 
 }

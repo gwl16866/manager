@@ -11,6 +11,4 @@ public class ResultData implements Serializable {
     private int code;
     private int dataSize;
 
-
-
 }

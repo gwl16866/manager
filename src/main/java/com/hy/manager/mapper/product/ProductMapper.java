@@ -3,10 +3,7 @@ package com.hy.manager.mapper.product;
 import com.hy.manager.entity.product.ClassesBo;
 import com.hy.manager.entity.product.Product;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -28,11 +25,57 @@ public interface ProductMapper extends BaseMapper<Product> {
     @SelectProvider(type = ProductProvider.class,method = "selectProductList")
     public List<Product> selectProductList(@Param("product") Product product);
 
+
+    @Select("select p.*,c.className from product p,classes c where p.classes = c.id and p.pid=#{pid}")
+    public Product queryProductById(Integer pid);
+
+
+
     /**
      * @return 查询所有类别
      */
     @Select("SELECT * FROM classes")
     public List<ClassesBo> selectClasses();
+
+
+    /**
+     *
+     * @return 修改上架状态
+     */
+    @Update("update product set upStatus=#{upStatus} where pid=#{pid} ")
+    public Integer updateUpStatusById(Product product);
+
+    /**
+     *
+     * @return 修改审核状态
+     */
+    @Update("update product set status=#{status} where pid=#{pid} ")
+    public Integer updateStatusById(Product product);
+
+
+
+
+    /**
+     *
+     * @return 删除
+     */
+    @Update("update product set isShow=2 where pid=#{id}")
+    public Integer deleteProductById(Integer id);
+
+
+    /**
+     * @return 批量修改上下架状态
+     */
+    @UpdateProvider(type = ProductProvider.class,method = "updateUpStatusProvider")
+    public Integer updateUpStatusProvider(@Param("ids") String[] ids,@Param("type") String type);
+
+
+    /**
+     * @return 批量修改审核状态
+     */
+    @UpdateProvider(type = ProductProvider.class,method = "updateStatusProvider")
+    public Integer updateStatusProvider(@Param("ids") String[] ids,@Param("type") String type);
+
 
 
 }
