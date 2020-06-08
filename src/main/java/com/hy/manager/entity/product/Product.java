@@ -59,5 +59,7 @@ public class Product implements Serializable {
 
     private String className;
 
+    private Integer isShow;
+
 
 }

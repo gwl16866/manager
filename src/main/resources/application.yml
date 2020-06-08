@@ -28,6 +28,6 @@ spring:
 #  jms:
 #    pub-sub-domain: false #false 代表队列
 
-mybatis:
+mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

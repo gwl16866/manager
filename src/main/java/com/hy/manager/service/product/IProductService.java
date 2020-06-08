@@ -19,5 +19,13 @@ public interface IProductService extends IService<Product> {
 
     public List<Product> selectProductList(Product product);
     public List<ClassesBo> selectClasses();
+    public Integer updateUpStatusById(Product product);
+    public Integer updateStatusById(Product product);
+    public Integer deleteProductById(Integer id);
+    public Integer updateUpStatusProvider(String[] ids,String type);
+    public Integer updateStatusProvider(String[] ids,String type);
+    public Product queryProductById(Integer pid);
+
+
 
 }
