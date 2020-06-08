@@ -16,6 +16,7 @@ public class Quantity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private Integer id;
     private Integer productId;
 
     private Integer orderId;
@@ -25,7 +26,7 @@ public class Quantity implements Serializable {
     private Integer userId;
 
     //库存类型
-    private String controlClass;
+    private Integer controlClass;
 
     private Integer status;
 
@@ -43,4 +44,7 @@ public class Quantity implements Serializable {
 
     //订单编号
     private String orderNumber;
+
+    //数量
+    private Integer counts;
 }

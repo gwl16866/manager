@@ -15,6 +15,7 @@ public class OrderDao {
         if (null != time && time !="") {
             sql.append(" and substr(o.submitDate,1,10) = '"+time+"'");
         }
+
         return sql.toString();
     }
 }

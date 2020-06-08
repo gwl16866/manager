@@ -1,10 +1,13 @@
 package com.hy.manager.controller.counts;
 
+import com.github.pagehelper.PageHelper;
+import com.hy.manager.Date.ResultData;
 import com.hy.manager.entity.counts.Quantity;
 import com.hy.manager.service.counts.IQuantityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -27,8 +30,17 @@ public class QuantityController {
     //库存列表
     @RequestMapping("/selectQuantity")
     @ResponseBody
-    public List<Quantity> selectQuantity(String productOrNumber, Integer status,String time){
-        return  iQuantityService.selectQuantity(productOrNumber, status,time);
+    public ResultData selectQuantity(@RequestParam("currentPage") int currentPage,
+                                     @RequestParam("pageSize") int pageSize,String productOrNumber, Integer status, String time){
+        ResultData resultData=new ResultData();
+        List<Quantity> quantityListSize=  iQuantityService.selectQuantity(productOrNumber, status,time);
+
+        PageHelper.startPage(currentPage, pageSize);
+        List<Quantity> quantityList=  iQuantityService.selectQuantity(productOrNumber, status,time);
+        resultData.setDataSize(quantityListSize.size());
+        resultData.setData(quantityList);
+
+        return resultData;
     }
 
 }

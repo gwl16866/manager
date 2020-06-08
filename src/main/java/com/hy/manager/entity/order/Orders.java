@@ -1,6 +1,7 @@
 package com.hy.manager.entity.order;
 
 import lombok.Data;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -25,8 +26,10 @@ public class Orders implements Serializable {
 
     private Integer userId;
 
+    //商品总价
     private BigDecimal sumMoney;
-
+    //商品单价
+    private BigDecimal price;
     //订单状态
     private Integer status;
 
@@ -52,5 +55,18 @@ public class Orders implements Serializable {
 
     //客户手机号
     private String phoneNo;
+    //客户地址
+    private String address;
 
+    //数量
+    private Integer counts;
+
+    //商品图片
+    private String image;
+    //商品规格
+    private String productModel;
+    //商品颜色
+    private String productColor;
+    //商品货号
+    private String productNumber;
 }

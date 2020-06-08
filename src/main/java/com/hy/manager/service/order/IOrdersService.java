@@ -14,5 +14,11 @@ import java.util.List;
  * @since 2020-06-04
  */
 public interface IOrdersService extends IService<Orders> {
+    //订单列表
     public List<Orders> selectOrders(String orderOrProduct,String nameOrPhone,String time);
+
+
+    //订单列表详情
+    public Orders lookOrders(String orderNumber);
+
 }

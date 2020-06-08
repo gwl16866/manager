@@ -28,4 +28,9 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
         return ordersMapper.selectOrders(orderOrProduct, nameOrPhone,time);
     }
 
+
+    //订单列表详情
+    public Orders lookOrders(String orderNumber) {
+        return ordersMapper.lookOrders(orderNumber);
+    }
 }
