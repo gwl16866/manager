@@ -1,8 +1,9 @@
 package com.hy.manager.mapper.customer;
 
+import com.hy.manager.entity.customer.Address;
 import com.hy.manager.entity.customer.Customer;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.hy.manager.entity.customer.customerOrderProduct;
+import com.hy.manager.entity.customer.CustomerOrderProduct;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -21,26 +22,26 @@ public interface CustomerMapper extends BaseMapper<Customer> {
     @SelectProvider(type = CustomerProvider.class, method = "selectCustomer")
     public List<Customer> listselect(Customer customer);
 
-  @Select("select id,account,name,sex,birthday,address,registDate from customer where id=#{value}")
-    public List<Customer> userselect(String id);
+  @Select("select c.id,c.account,c.name,c.sex,c.birthday,a.aname,c.registDate from customer c,address a where c.id=a.fid and c.id=#{value}")
+    public List<CustomerOrderProduct> userselect(String id);
 
-  @Select("select name,phoneNo,address,coding from customer where id=#{value}")
-    public List<Customer> addselect(String id);
+  @Select("select c.name,a.phoneNo,a.aname,c.coding from customer c,address a where c.id=a.fid and c.id=#{value}")
+    public List<CustomerOrderProduct> addselect(String id);
 
-    @Select("select c.*,o.* from customer c,orders o where c.id=o.userId and c.id=#{value}")
-    public List<customerOrderProduct> orderselect(String id);
+    @Select("select c.*,o.*,a.* from customer c,orders o,address a where c.id=o.userId and c.id=a.fid and c.id=#{value}")
+    public List<CustomerOrderProduct> orderselect(String id);
 
     @Update("update customer set account=#{account},name=#{name},level=#{level},money=#{money},orderCounts=#{orderCounts},status=#{status} where id=#{id}")
     public void upd(Customer customer);
 
-    @Update("update customer set account=#{account},name=#{name},sex=#{sex},birthday=#{birthday},address=#{address},registDate=#{registDate} where id=#{id}")
+    @Update("update customer set account=#{account},name=#{name},sex=#{sex},birthday=#{birthday},registDate=#{registDate} where id=#{id}")
     public void custupd(Customer customer);
+//
+    @Update("update address set aname=#{aname} where id=#{id}")
+    public void addupd(Address address);
 
-    @Update("update customer set name=#{name},phoneNo=#{phoneNo},address=#{address},coding=#{coding} where id=#{id}")
-    public void addupd(Customer customer);
-
-    @Select("SELECT c.*,o.*,p.* FROM customer c,orders o,product p WHERE c.id=o.userId AND o.productId=p.pid AND c.id=#{value}")
-    public List<customerOrderProduct> ordersselect(String id);
+    @Select("select c.*,o.*,p.*,a.* from customer c,orders o,product p,address a where c.id=o.userId and o.productId=p.pid and c.id=a.fid and c.id=#{value}")
+    public CustomerOrderProduct ordersselect(String id);
 
 
     @Delete("delete from customer where id=#{value}")

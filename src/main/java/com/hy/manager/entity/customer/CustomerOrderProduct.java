@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 @Data
-public class customerOrderProduct implements Serializable {
+public class CustomerOrderProduct implements Serializable {
 
     private Integer id;
     private String account;
@@ -56,6 +56,24 @@ public class customerOrderProduct implements Serializable {
     private Integer images;
     private Integer classes;
     private String className;
+    private Integer aid;
+    private String aname;
+
+    public Integer getAid() {
+        return aid;
+    }
+
+    public void setAid(Integer aid) {
+        this.aid = aid;
+    }
+
+    public String getAname() {
+        return aname;
+    }
+
+    public void setAname(String aname) {
+        this.aname = aname;
+    }
 
     public Integer getId() {
         return id;

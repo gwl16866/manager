@@ -1,8 +1,9 @@
 package com.hy.manager.controller.customer;
 
 
+import com.hy.manager.entity.customer.Address;
 import com.hy.manager.entity.customer.Customer;
-import com.hy.manager.entity.customer.customerOrderProduct;
+import com.hy.manager.entity.customer.CustomerOrderProduct;
 import com.hy.manager.service.customer.ICustomerService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +39,7 @@ public class CustomerController {
     @CrossOrigin
     @ResponseBody
     @RequestMapping("/userselect")
-    public List<Customer> userselect(String id){
+    public List<CustomerOrderProduct> userselect(String id){
 
         return customerService.userselect(id);
     }
@@ -46,7 +47,7 @@ public class CustomerController {
     @CrossOrigin
     @ResponseBody
     @RequestMapping("/addselect")
-    public List<Customer> addselect(String id){
+    public List<CustomerOrderProduct> addselect(String id){
 
         return customerService.addselect(id);
     }
@@ -54,14 +55,15 @@ public class CustomerController {
     @CrossOrigin
     @ResponseBody
     @RequestMapping("/orderselect")
-    public List<customerOrderProduct> orderselect(String id){
+    public List<CustomerOrderProduct> orderselect(String id){
         System.out.println(id);
         return customerService.orderselect(id);
     }
     @CrossOrigin
     @ResponseBody
     @RequestMapping("/ordersselect")
-    public List<customerOrderProduct> ordersselect(String id){
+    public CustomerOrderProduct ordersselect(String id){
+
         return customerService.ordersselect(id);
     }
 
@@ -79,8 +81,9 @@ public class CustomerController {
 
     @CrossOrigin
     @RequestMapping("/addupd")
-    public void addupd(Customer customer){
-        customerService.addupd(customer);
+    public void addupd(Address address){
+        System.out.println(address.getId());
+        customerService.addupd(address);
     }
 
 
