@@ -19,12 +19,16 @@ public interface IProductService extends IService<Product> {
 
     public List<Product> selectProductList(Product product);
     public List<ClassesBo> selectClasses();
+    public List<ClassesBo> queryClassesTable(Integer classId);
     public Integer updateUpStatusById(Product product);
+    public Integer updateClassStatus(ClassesBo classesBo);
     public Integer updateStatusById(Product product);
+    public Integer updateIsShow(Integer pid);
     public Integer deleteProductById(Integer id);
-    public Integer updateUpStatusProvider(String[] ids,String type);
+    public Integer updateUpStatusProvider(Object[] ids,String type);
     public Integer updateStatusProvider(String[] ids,String type);
     public Product queryProductById(Integer pid);
+    public Integer[] queryStatus(String[] ids);
 
 
 

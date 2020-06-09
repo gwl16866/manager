@@ -22,22 +22,24 @@ public class ProductProvider {
         }else if(!StringUtils.isEmpty(product.getClasses())){
             sb.append(" and c.id = "+product.getClasses()+"");
         }else if(!StringUtils.isEmpty(product.getStatus())){
-            sb.append(" and status = "+product.getStatus()+"");
+            sb.append(" and p.status = "+product.getStatus()+"");
         }else if(!StringUtils.isEmpty(product.getUpStatus())){
-            sb.append(" and upStatus = "+product.getUpStatus()+"");
+            sb.append(" and p.upStatus = "+product.getUpStatus()+"");
         }else if(!StringUtils.isEmpty(product.getIsShow())){
-            sb.append(" and isShow =2");
+            sb.append(" and p.isShow =2");
         }
 
         return sb.toString();
     }
 
 
-
-    /*
-    * 修改upstatus状态
-    * */
-    public String updateUpStatusProvider(@Param("ids") String [] ids,@Param("type") String type){
+    /**
+     * 修改upstatus状态
+     * @param ids
+     * @param type
+     * @return
+     */
+    public String updateUpStatusProvider(@Param("ids") Object [] ids,@Param("type") String type){
        StringBuffer sb = new StringBuffer();
        if(type.equals("shangjia")){
            sb.append("update product set upStatus=1 ");
@@ -58,9 +60,12 @@ public class ProductProvider {
     }
 
 
-    /*
+    /**
      * 修改status状态
-     * */
+     * @param ids
+     * @param type
+     * @return
+     */
     public String updateStatusProvider(@Param("ids") String [] ids,@Param("type") String type){
         StringBuffer sb = new StringBuffer();
         if(type.equals("shenhe")){
@@ -78,6 +83,45 @@ public class ProductProvider {
         sb.append(")");
         return sb.toString();
     }
+
+
+    /**
+     * 查询所有类别 带分页
+     * @param classId
+     * @return
+     */
+    public String queryClassesTable(Integer classId){
+        StringBuffer sb = new StringBuffer();
+        sb.append("select * from classes where 1=1  ");
+        if(null != classId && !"".equals(classId)){
+            sb.append(" and id ="+classId+"");
+        }
+        return sb.toString();
+    }
+
+
+    /**
+     * 查询状态
+     * @param ids
+     * @return
+     */
+    public String queryStatus(@Param("ids") String [] ids){
+        StringBuffer sb = new StringBuffer();
+            sb.append("select pid from product p where 1=1 ");
+        sb.append(" and pid in (");
+        for(int i=0;i<ids.length;i++){
+            sb.append(ids[i]);
+            if(i<ids.length-1){
+                sb.append(",");
+            }
+        }
+        sb.append(") and p.status =1");
+        return sb.toString();
+    }
+
+
+
+
 
 
 

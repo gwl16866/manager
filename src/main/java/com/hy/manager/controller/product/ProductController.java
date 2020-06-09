@@ -45,6 +45,23 @@ public class ProductController {
         return resultData;
     }
 
+    /**
+     * 查询所有类别表table分页
+     * @return
+     */
+    @RequestMapping("/queryClassesTable")
+    public ResultData queryClassesTable(@RequestParam("currentPage") int currentPage,
+                                        @RequestParam("pageSize") int pageSize,
+                                        Integer classId){
+        ResultData resultData = new ResultData();
+        resultData.setDataSize(productService.queryClassesTable(classId).size());
+        PageHelper.startPage(currentPage,pageSize);
+        List<ClassesBo> classsesList = productService.queryClassesTable(classId);
+        resultData.setData(classsesList);
+        return resultData;
+    }
+
+
 
     /**
      * 根据id查一条商品
@@ -60,17 +77,14 @@ public class ProductController {
     }
 
 
-
-
     /**
      * 查询所有类别
      * @return
      */
-    @RequestMapping("queryClasses")
+    @RequestMapping("/queryClasses")
     public List<ClassesBo> selectClasses(){
        return productService.selectClasses();
     }
-
 
     /**
      *修改上架状态
@@ -88,14 +102,29 @@ public class ProductController {
     }
 
 
+
     /**
      *修改审核状态
      */
     @RequestMapping("/updateStatusById")
-    public ResultData updateStatusById(Product product){
+    public ResultData updateStatusById(Product product,Integer showStatus){
         ResultData resultData = new ResultData();
+        Integer isShowVal=0;
+        //恢复当前商品的isshow状态
+        if(null != showStatus && showStatus == 1 ){
+           isShowVal = productService.updateIsShow(product.getPid());
+        }
         Integer v = productService.updateStatusById(product);
-        if(v >0){
+        //当拒绝时 也下架
+        if(product.getStatus() == 0){
+            //下架
+            Product xiajiaProduct = new Product();
+            xiajiaProduct.setPid(product.getPid());
+            xiajiaProduct.setUpStatus(2);
+            Integer xiajiaVal = productService.updateUpStatusById(xiajiaProduct);
+
+        }
+        if(v >0 && isShowVal >0){
             resultData.setCode(200);
         }else {
             resultData.setCode(400);
@@ -121,7 +150,7 @@ public class ProductController {
         Product xiajiaProduct = new Product();
         xiajiaProduct.setPid(id);
         xiajiaProduct.setUpStatus(2);
-        Integer xiajiaVal = productService.updateUpStatusById(jujueProduct);
+        Integer xiajiaVal = productService.updateUpStatusById(xiajiaProduct);
 
         if(v >0 && shenheVal >0 && xiajiaVal >0){
             resultData.setCode(200);
@@ -138,12 +167,27 @@ public class ProductController {
     @RequestMapping(value = "/controlSome")
     public ResultData controlSome(String [] ids,String type){
         ResultData resultData = new ResultData();
-        Integer v = productService.updateUpStatusProvider(ids,type);
+        Integer v=0;
+        if("shangjia".equals(type)){
+            //先去查询 这些需要上架的商品是否已审核
+            Integer[] list = productService.queryStatus(ids);
+            if(list.length>0){
+                v = productService.updateUpStatusProvider(list,type);
+            }else{
+                v=-1;
+            }
+        }else{
+            //下架 删除
+            v = productService.updateUpStatusProvider(ids,type);
+        }
         if(v >0){
             resultData.setCode(200);
+        }else if(v==-1){
+            resultData.setCode(300);
         }else {
             resultData.setCode(400);
         }
+
         return resultData;
     }
 
@@ -155,6 +199,23 @@ public class ProductController {
     public ResultData controlSomeStatus(String [] ids,String type){
         ResultData resultData = new ResultData();
         Integer v = productService.updateStatusProvider(ids,type);
+        Integer xiajiaVal = productService.updateUpStatusProvider(ids,"xiajia");
+
+        if(v >0 && xiajiaVal >0){
+            resultData.setCode(200);
+        }else {
+            resultData.setCode(400);
+        }
+        return resultData;
+    }
+
+    /**
+     *修改商品类别是否可用
+     */
+    @RequestMapping("/updateClassStatus")
+    public ResultData updateClassStatus(ClassesBo classesBo){
+        ResultData resultData = new ResultData();
+        Integer v = productService.updateClassStatus(classesBo);
         if(v >0){
             resultData.setCode(200);
         }else {

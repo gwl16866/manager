@@ -32,11 +32,17 @@ public interface ProductMapper extends BaseMapper<Product> {
 
 
     /**
+     * @return 查询所有类别分页
+     */
+    @SelectProvider(type = ProductProvider.class,method = "queryClassesTable")
+    public List<ClassesBo> queryClassesTable(Integer classId);
+
+
+    /**
      * @return 查询所有类别
      */
     @Select("SELECT * FROM classes")
     public List<ClassesBo> selectClasses();
-
 
     /**
      *
@@ -47,12 +53,26 @@ public interface ProductMapper extends BaseMapper<Product> {
 
     /**
      *
+     * @return 修改商品类别状态
+     */
+    @Update("update classes set status=#{status} where id=#{id} ")
+    public Integer updateClassStatus(ClassesBo classesBo);
+
+
+    /**
+     *
      * @return 修改审核状态
      */
     @Update("update product set status=#{status} where pid=#{pid} ")
     public Integer updateStatusById(Product product);
 
 
+    /**
+     *
+     * @return isshow恢复
+     */
+    @Update("update product set isShow=1 where pid=#{id}")
+    public Integer updateIsShow(Integer id);
 
 
     /**
@@ -67,7 +87,7 @@ public interface ProductMapper extends BaseMapper<Product> {
      * @return 批量修改上下架状态
      */
     @UpdateProvider(type = ProductProvider.class,method = "updateUpStatusProvider")
-    public Integer updateUpStatusProvider(@Param("ids") String[] ids,@Param("type") String type);
+    public Integer updateUpStatusProvider(@Param("ids") Object[] ids,@Param("type") String type);
 
 
     /**
@@ -75,6 +95,14 @@ public interface ProductMapper extends BaseMapper<Product> {
      */
     @UpdateProvider(type = ProductProvider.class,method = "updateStatusProvider")
     public Integer updateStatusProvider(@Param("ids") String[] ids,@Param("type") String type);
+
+
+    /**
+     * @return 查询审核状态
+     */
+    @SelectProvider(type = ProductProvider.class,method = "queryStatus")
+    public Integer[] queryStatus(@Param("ids") String[] ids);
+
 
 
 
