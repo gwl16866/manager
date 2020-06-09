@@ -1,7 +1,7 @@
 package com.hy.manager.service.order;
 
-import com.hy.manager.entity.order.Returnthings;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hy.manager.entity.order.Returnthings;
 
 import java.util.List;
 
@@ -14,6 +14,12 @@ import java.util.List;
  * @since 2020-06-04
  */
 public interface IReturnthingsService extends IService<Returnthings> {
+//退货列表
+    public List<Returnthings> selectReturnThings(String serverNumber,String nameOrPhone,String time,Integer applyStatus);
 
-    public List<Returnthings> selectReturnThings(String serverNumber,String nameOrPhone,String time);
+    //同意退货
+    public void agreeReturn(Integer id,Integer applyStatus);
+
+    //批量
+    public void batch(String[] batchList,String type);
 }

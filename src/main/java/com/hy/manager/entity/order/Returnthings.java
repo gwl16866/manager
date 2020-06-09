@@ -59,6 +59,6 @@ private Integer id;
     private String productColor;
     //商品货号
     private String productNumber;
-    //地址
-    private String address;
+    //客户地址
+    private String aname;
 }

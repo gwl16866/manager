@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface IReturnmoneyService extends IService<Returnmoney> {
     //退款列表
-    public List<Returnmoney> selectReturnMoney(String serverNumber,Integer applyStatus,String time);
+    public List<Returnmoney> selectReturnMoney(String serverNumber,String nameOrPhone,String time,Integer applyStatus);
 
     //退款原因列表
     public List<Returnreason> selectReturnReason();
@@ -32,4 +32,10 @@ public interface IReturnmoneyService extends IService<Returnmoney> {
 
     //新增退款原因
     public void addReason(String reason);
+
+    //同意退款
+    public void agreeReturn(Integer id,Integer applyStatus);
+
+    //批量
+    public void batch(String[] batchList,String type);
 }
