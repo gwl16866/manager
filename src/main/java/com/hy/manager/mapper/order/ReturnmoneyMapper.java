@@ -21,7 +21,7 @@ public interface ReturnmoneyMapper extends BaseMapper<Returnmoney> {
 
     //退款列表
     @SelectProvider(type = ReturnMoneyDao.class, method = "selectReturnMoney")
-    public List<Returnmoney> selectReturnMoney(String serverNumber,Integer applyStatus,String time);
+    public List<Returnmoney> selectReturnMoney(String serverNumber,String nameOrPhone,String time,Integer applyStatus);
 
     //退款原因列表
     @Select("select * from returnreason")
@@ -42,5 +42,14 @@ public interface ReturnmoneyMapper extends BaseMapper<Returnmoney> {
     //新增退款原因
     @Insert("insert into returnreason(reason,reasonTime,reasonStatus) values (#{reason},now(),1)")
     public void addReason(String reason);
+
+    //同意或者拒绝退款
+    @Update("update returnmoney set applyStatus=#{applyStatus},dispose=now() where id=#{id}")
+    public void agreeReturn(Integer id,Integer applyStatus);
+
+
+    //批量
+    @UpdateProvider(type = ReturnMoneyDao.class, method = "batch")
+    public void batch(String[] batchList,String type);
 
 }

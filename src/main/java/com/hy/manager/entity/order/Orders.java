@@ -56,7 +56,7 @@ public class Orders implements Serializable {
     //客户手机号
     private String phoneNo;
     //客户地址
-    private String address;
+    private String aname;
 
     //数量
     private Integer counts;

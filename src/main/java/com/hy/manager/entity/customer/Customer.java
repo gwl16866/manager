@@ -4,10 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -40,11 +38,20 @@ public class Customer implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")//前端到后端
     private Date birthday;
 
-    private String phoneNo;
-
-    private String address;
 
     private Integer status;
+
+    private Integer sex;
+
+    private Integer coding;
+
+    public Integer getSex() {
+        return sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
 
     public Integer getId() {
         return id;
@@ -110,21 +117,7 @@ public class Customer implements Serializable {
         this.birthday = birthday;
     }
 
-    public String getPhoneNo() {
-        return phoneNo;
-    }
 
-    public void setPhoneNo(String phoneNo) {
-        this.phoneNo = phoneNo;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     public Integer getStatus() {
         return status;
@@ -132,5 +125,13 @@ public class Customer implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getCoding() {
+        return coding;
+    }
+
+    public void setCoding(Integer coding) {
+        this.coding = coding;
     }
 }

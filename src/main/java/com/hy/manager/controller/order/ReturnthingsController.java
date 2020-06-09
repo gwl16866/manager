@@ -31,14 +31,39 @@ public class ReturnthingsController {
     @ResponseBody
     @RequestMapping("/selectReturnThings")
     public  ResultData selectReturnThings(@RequestParam("currentPage") int currentPage,
-                               @RequestParam("pageSize") int pageSize,String serverNumber,String nameOrPhone,String time){
+                               @RequestParam("pageSize") int pageSize,String serverNumber,String nameOrPhone,String time,Integer applyStatus){
         ResultData resultData=new ResultData();
-        List<Returnthings> returnthingsListSize=iReturnthingsService.selectReturnThings(serverNumber,nameOrPhone,time);
+        List<Returnthings> returnthingsListSize=iReturnthingsService.selectReturnThings(serverNumber,nameOrPhone,time,applyStatus);
         PageHelper.startPage(currentPage, pageSize);
-        List<Returnthings> returnthingsList=iReturnthingsService.selectReturnThings(serverNumber,nameOrPhone,time);
+        List<Returnthings> returnthingsList=iReturnthingsService.selectReturnThings(serverNumber,nameOrPhone,time,applyStatus);
         resultData.setDataSize(returnthingsListSize.size());
         resultData.setData(returnthingsList);
         return resultData;
+    }
+
+    //同意或者拒绝退货
+    @ResponseBody
+    @RequestMapping("/agreeReturn")
+    public Integer agreeReturn(Integer id,Integer applyStatus){
+        try {
+            iReturnthingsService.agreeReturn(id,applyStatus);
+        }catch (Exception e){
+            return 0;
+        }
+        return 1;
+    }
+
+
+    //批量同意或者拒绝退款
+    @ResponseBody
+    @RequestMapping("/batch")
+    public Integer batch(String[] batchList,String type){
+        try {
+            iReturnthingsService.batch(batchList,type);
+        }catch (Exception e){
+            return 0;
+        }
+        return 1;
     }
 
 }

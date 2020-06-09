@@ -32,11 +32,11 @@ public class ReturnmoneyController {
     @ResponseBody
     @RequestMapping("/selectReturnMoney")
     public ResultData selectReturnMoney(@RequestParam("currentPage") int currentPage,
-                                        @RequestParam("pageSize") int pageSize, String serverNumber, Integer applyStatus, String time) {
+                                        @RequestParam("pageSize") int pageSize, String serverNumber, String nameOrPhone, String time,Integer applyStatus) {
         ResultData resultData = new ResultData();
-        List<Returnmoney> returnmoneyListSize = iReturnmoneyService.selectReturnMoney(serverNumber, applyStatus, time);
+        List<Returnmoney> returnmoneyListSize = iReturnmoneyService.selectReturnMoney(serverNumber, nameOrPhone, time,applyStatus);
         PageHelper.startPage(currentPage, pageSize);
-        List<Returnmoney> returnmoneyList = iReturnmoneyService.selectReturnMoney(serverNumber, applyStatus, time);
+        List<Returnmoney> returnmoneyList = iReturnmoneyService.selectReturnMoney(serverNumber, nameOrPhone, time,applyStatus);
         resultData.setDataSize(returnmoneyListSize.size());
         resultData.setData(returnmoneyList);
         return resultData;
@@ -103,4 +103,31 @@ public class ReturnmoneyController {
         }
         return 1;
     }
+
+    //同意或者拒绝退款
+    @ResponseBody
+    @RequestMapping("/agreeReturn")
+    public Integer agreeReturn(Integer id,Integer applyStatus){
+        try {
+            iReturnmoneyService.agreeReturn(id,applyStatus);
+        }catch (Exception e){
+            return 0;
+        }
+        return 1;
+    }
+
+
+    //批量同意或者拒绝退款
+    @ResponseBody
+    @RequestMapping("/batch")
+    public Integer batch(String[] batchList,String type){
+        try {
+            iReturnmoneyService.batch(batchList,type);
+        }catch (Exception e){
+            return 0;
+        }
+        return 1;
+    }
+
+
 }

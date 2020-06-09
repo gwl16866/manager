@@ -24,8 +24,8 @@ public class ReturnmoneyServiceImpl extends ServiceImpl<ReturnmoneyMapper, Retur
     @Autowired
     private ReturnmoneyMapper returnmoneyMapper;
 //退款列表
-    public List<Returnmoney> selectReturnMoney(String serverNumber,Integer applyStatus,String time){
-        return returnmoneyMapper.selectReturnMoney(serverNumber,applyStatus,time);
+    public List<Returnmoney> selectReturnMoney(String serverNumber,String nameOrPhone,String time,Integer applyStatus){
+        return returnmoneyMapper.selectReturnMoney(serverNumber,nameOrPhone,time,applyStatus);
     }
 
     //退款原因列表
@@ -53,4 +53,14 @@ public class ReturnmoneyServiceImpl extends ServiceImpl<ReturnmoneyMapper, Retur
     public void addReason(String reason){
         returnmoneyMapper.addReason(reason);
     }
+
+    //同意退款
+    public void agreeReturn(Integer id,Integer applyStatus){
+        returnmoneyMapper.agreeReturn(id,applyStatus);
+    }
+
+    //批量
+    public void batch(String[] batchList,String type){
+        returnmoneyMapper.batch(batchList,type);
+    };
 }
