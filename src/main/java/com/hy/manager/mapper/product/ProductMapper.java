@@ -1,5 +1,6 @@
 package com.hy.manager.mapper.product;
 
+import com.hy.manager.entity.product.ClassModel;
 import com.hy.manager.entity.product.ClassesBo;
 import com.hy.manager.entity.product.Product;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -102,6 +103,42 @@ public interface ProductMapper extends BaseMapper<Product> {
      */
     @SelectProvider(type = ProductProvider.class,method = "queryStatus")
     public Integer[] queryStatus(@Param("ids") String[] ids);
+
+
+    /**
+     * 添加类别
+     * @param classesBo
+     * @return
+     */
+    @Insert("insert into classes(className,status) values(#{className},#{status})")
+    public Integer addClasses(ClassesBo classesBo);
+
+    /**
+     * 根据类别查询 规格或颜色
+     * @param classModel
+     * @return
+     */
+    @Select("select * from model where fid=#{fid} and type =#{type}")
+    public List<ClassModel> queryClassModel(ClassModel classModel);
+
+
+    /**
+     * 根据类别添加 规格或颜色
+     * @param classModel
+     * @return
+     */
+    @Insert("insert into model(fid,twoModel,type) values(#{fid},#{twoModel},#{type})")
+    public Integer addModelOrColor(ClassModel classModel);
+
+
+    /**
+     * 根据类别删除 规格或颜色
+     * @param classModel
+     * @return
+     */
+    @Insert("delete from model where id=#{id}")
+    public Integer delModelOrColor(ClassModel classModel);
+
 
 
 

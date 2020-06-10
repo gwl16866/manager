@@ -1,6 +1,7 @@
 package com.hy.manager.service.product.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hy.manager.entity.product.ClassModel;
 import com.hy.manager.entity.product.ClassesBo;
 import com.hy.manager.entity.product.Product;
 import com.hy.manager.mapper.product.ProductMapper;
@@ -84,5 +85,25 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
     @Override
     public Integer[] queryStatus(String[] ids) {
         return productMapper.queryStatus(ids);
+    }
+
+    @Override
+    public Integer addClasses(ClassesBo classesBo) {
+        return productMapper.addClasses(classesBo);
+    }
+
+    @Override
+    public Integer addModelOrColor(ClassModel classModel) {
+        return productMapper.addModelOrColor(classModel);
+    }
+
+    @Override
+    public Integer delModelOrColor(ClassModel classModel) {
+        return productMapper.delModelOrColor(classModel);
+    }
+
+    @Override
+    public List<ClassModel> queryClassModel(ClassModel classModel) {
+        return productMapper.queryClassModel(classModel);
     }
 }

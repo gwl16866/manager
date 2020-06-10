@@ -3,6 +3,7 @@ package com.hy.manager.controller.product;
 
 import com.github.pagehelper.PageHelper;
 import com.hy.manager.Date.ResultData;
+import com.hy.manager.entity.product.ClassModel;
 import com.hy.manager.entity.product.ClassesBo;
 import com.hy.manager.entity.product.Product;
 import com.hy.manager.service.product.IProductService;
@@ -216,6 +217,69 @@ public class ProductController {
     public ResultData updateClassStatus(ClassesBo classesBo){
         ResultData resultData = new ResultData();
         Integer v = productService.updateClassStatus(classesBo);
+        if(v >0){
+            resultData.setCode(200);
+        }else {
+            resultData.setCode(400);
+        }
+        return resultData;
+    }
+
+    /**
+     *添加类别
+     */
+    @RequestMapping("/addClasses")
+    public ResultData addClasses(ClassesBo classesBo){
+        ResultData resultData = new ResultData();
+        Integer v = productService.addClasses(classesBo);
+        if(v >0){
+            resultData.setCode(200);
+        }else {
+            resultData.setCode(400);
+        }
+        return resultData;
+    }
+
+
+
+    /**
+     *  查询规格 或颜色
+     */
+    @RequestMapping("/queryClassModel")
+    public ResultData queryClassModel( @RequestParam("currentPage") int currentPage,
+                                        @RequestParam("pageSize") int pageSize,
+                                        ClassModel classModel){
+        ResultData resultData = new ResultData();
+        List<ClassModel> list = productService.queryClassModel(classModel);
+        PageHelper.startPage(currentPage,pageSize);
+        resultData.setData(productService.queryClassModel(classModel));
+        resultData.setDataSize(list.size());
+        return resultData;
+    }
+
+
+    /**
+     *添加规格或颜色
+     */
+    @RequestMapping("/addModelOrColor")
+    public ResultData addModelOrColor(ClassModel classModel){
+        ResultData resultData = new ResultData();
+        Integer v = productService.addModelOrColor(classModel);
+        if(v >0){
+            resultData.setCode(200);
+        }else {
+            resultData.setCode(400);
+        }
+        return resultData;
+    }
+
+    /**
+     *删除规格或颜色
+     */
+    @RequestMapping("/delModelOrColor")
+    public ResultData delModelOrColor(ClassModel classModel){
+        ResultData resultData = new ResultData();
+        Integer v = productService.delModelOrColor(classModel);
         if(v >0){
             resultData.setCode(200);
         }else {
