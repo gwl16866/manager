@@ -10,6 +10,7 @@ public class ClassesBo implements Serializable {
 
     private int id;
     private String className;
+    private Integer status;
 
 
 

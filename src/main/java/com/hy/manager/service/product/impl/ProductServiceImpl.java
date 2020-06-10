@@ -1,12 +1,14 @@
 package com.hy.manager.service.product.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hy.manager.entity.product.ClassModel;
 import com.hy.manager.entity.product.ClassesBo;
 import com.hy.manager.entity.product.Product;
 import com.hy.manager.mapper.product.ProductMapper;
 import com.hy.manager.service.product.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,6 +21,7 @@ import java.util.List;
  * @since 2020-06-04
  */
 @Service
+@Transactional
 public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> implements IProductService {
     @Autowired
     private ProductMapper productMapper;
@@ -35,8 +38,18 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
     }
 
     @Override
+    public List<ClassesBo> queryClassesTable(Integer classId) {
+        return productMapper.queryClassesTable(classId);
+    }
+
+    @Override
     public Integer updateUpStatusById(Product product) {
         return productMapper.updateUpStatusById(product);
+    }
+
+    @Override
+    public Integer updateClassStatus(ClassesBo classesBo) {
+        return productMapper.updateClassStatus(classesBo);
     }
 
     @Override
@@ -45,12 +58,17 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
     }
 
     @Override
+    public Integer updateIsShow(Integer pid) {
+        return productMapper.updateIsShow(pid);
+    }
+
+    @Override
     public Integer deleteProductById(Integer id) {
         return productMapper.deleteProductById(id);
     }
 
     @Override
-    public Integer updateUpStatusProvider(String[] ids, String type) {
+    public Integer updateUpStatusProvider(Object[] ids, String type) {
         return productMapper.updateUpStatusProvider(ids,type);
     }
 
@@ -62,5 +80,30 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
     @Override
     public Product queryProductById(Integer pid) {
         return productMapper.queryProductById(pid);
+    }
+
+    @Override
+    public Integer[] queryStatus(String[] ids) {
+        return productMapper.queryStatus(ids);
+    }
+
+    @Override
+    public Integer addClasses(ClassesBo classesBo) {
+        return productMapper.addClasses(classesBo);
+    }
+
+    @Override
+    public Integer addModelOrColor(ClassModel classModel) {
+        return productMapper.addModelOrColor(classModel);
+    }
+
+    @Override
+    public Integer delModelOrColor(ClassModel classModel) {
+        return productMapper.delModelOrColor(classModel);
+    }
+
+    @Override
+    public List<ClassModel> queryClassModel(ClassModel classModel) {
+        return productMapper.queryClassModel(classModel);
     }
 }
