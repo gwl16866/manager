@@ -1,5 +1,6 @@
 package com.hy.manager.mapper.order.Dao;
 
+import com.hy.manager.entity.order.Seckill;
 import org.apache.ibatis.annotations.Param;
 
 public class ReturnThingsDao {
@@ -42,5 +43,24 @@ public class ReturnThingsDao {
         }
         sb.append(")");
         return sb.toString();
+    }
+
+
+    //秒杀
+    public String selectSeckill(Seckill seckill) {
+        StringBuffer sql = new StringBuffer("select s.*,p.* from seckill s left join product p on s.seckillId=p.seckillId and 1=1 ");
+        //标题
+        if (null != seckill.getTitle() && seckill.getTitle() !="") {
+            sql.append(" and s.title like '%" + seckill.getTitle() + "%'");
+        }
+        //时间
+        if (null != seckill.getStarTime() ) {
+            sql.append(" and substr(rs.applyTime,1,10) = '"+seckill.getStarTime()+"'");
+        }
+        //状态
+        if(null !=seckill.getStatus() ){
+            sql.append(" and s.status = "+seckill.getStatus());
+        }
+        return sql.toString();
     }
 }

@@ -2,6 +2,7 @@ package com.hy.manager.service.order;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hy.manager.entity.order.Returnthings;
+import com.hy.manager.entity.order.Seckill;
 
 import java.util.List;
 
@@ -22,4 +23,17 @@ public interface IReturnthingsService extends IService<Returnthings> {
 
     //批量
     public void batch(String[] batchList,String type);
+
+    //秒杀
+    public List<Seckill> selectSeckill(Seckill seckill);
+
+    //上架/下架
+    public void putOrNot(Integer seckillId,Integer putOrNot);
+
+    //新增秒杀活动
+    public void addSeckill(String title , String starTime, String endTime, String seckillStarTime, String seckillEndTime);
+
+
+    //商品数量
+    public Integer seckillCounts(Integer seckillId);
 }

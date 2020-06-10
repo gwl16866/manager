@@ -31,12 +31,12 @@ public class QuantityController {
     @RequestMapping("/selectQuantity")
     @ResponseBody
     public ResultData selectQuantity(@RequestParam("currentPage") int currentPage,
-                                     @RequestParam("pageSize") int pageSize,String productOrNumber, Integer status, String time){
+                                     @RequestParam("pageSize") int pageSize,String productOrNumber, String controlClass, String time){
         ResultData resultData=new ResultData();
-        List<Quantity> quantityListSize=  iQuantityService.selectQuantity(productOrNumber, status,time);
+        List<Quantity> quantityListSize=  iQuantityService.selectQuantity(productOrNumber, controlClass,time);
 
         PageHelper.startPage(currentPage, pageSize);
-        List<Quantity> quantityList=  iQuantityService.selectQuantity(productOrNumber, status,time);
+        List<Quantity> quantityList=  iQuantityService.selectQuantity(productOrNumber, controlClass,time);
         resultData.setDataSize(quantityListSize.size());
         resultData.setData(quantityList);
 

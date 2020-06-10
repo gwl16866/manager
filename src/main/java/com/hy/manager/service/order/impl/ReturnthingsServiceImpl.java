@@ -2,11 +2,13 @@ package com.hy.manager.service.order.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hy.manager.entity.order.Returnthings;
+import com.hy.manager.entity.order.Seckill;
 import com.hy.manager.mapper.order.ReturnthingsMapper;
 import com.hy.manager.service.order.IReturnthingsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,4 +39,24 @@ public class ReturnthingsServiceImpl extends ServiceImpl<ReturnthingsMapper, Ret
     public void batch(String[] batchList,String type){
             returnthingsMapper.batch(batchList,type);
     }
+    //秒杀
+    public List<Seckill> selectSeckill(Seckill seckill){
+        return  returnthingsMapper.selectSeckill(seckill);
+    }
+
+    //上架/下架
+    public void putOrNot(Integer seckillId,Integer putOrNot){
+        returnthingsMapper.putOrNot(seckillId,putOrNot);
+    };
+
+
+    //新增秒杀
+    public void addSeckill(String title , String starTime, String endTime, String seckillStarTime, String seckillEndTime){
+        returnthingsMapper.addSeckill(title, starTime, endTime, seckillStarTime, seckillEndTime);
+    };
+
+    //商品数量
+    public Integer seckillCounts(Integer seckillId){
+        return returnthingsMapper.seckillCounts(seckillId);
+    };
 }

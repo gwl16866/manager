@@ -19,5 +19,5 @@ import java.util.List;
 public interface QuantityMapper extends BaseMapper<Quantity> {
     //库存列表
     @SelectProvider(type = QuantityDao.class, method = "selectQuantity")
-    public List<Quantity> selectQuantity(String productOrNumber, Integer status,String time);
+    public List<Quantity> selectQuantity(String productOrNumber, String controlClass,String time);
 }

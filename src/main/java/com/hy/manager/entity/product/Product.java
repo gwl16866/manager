@@ -1,14 +1,11 @@
 package com.hy.manager.entity.product;
 
-import java.math.BigDecimal;
-
-import java.time.LocalDate;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -60,6 +57,14 @@ public class Product implements Serializable {
     private String className;
 
     private Integer isShow;
+
+
+    private Integer seckillId;
+    private BigDecimal seckillPrice;
+    private Integer seckillNumber;
+    private Integer residueNumber;
+    private Integer purchaseNumber;
+
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
