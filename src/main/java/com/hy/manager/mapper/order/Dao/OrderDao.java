@@ -9,7 +9,7 @@ public class OrderDao {
         }
         //客户名称/客户手机号
         if (null != nameOrPhone && nameOrPhone !="") {
-            sql.append(" and c.name like '%" + nameOrPhone + "%' or c.phoneNo like '%"+nameOrPhone+"%'");
+            sql.append(" and c.name like '%" + nameOrPhone + "%' or a.phoneNo like '%"+nameOrPhone+"%'");
         }
         //提交时间
         if (null != time && time !="") {

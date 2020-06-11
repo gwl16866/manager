@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.hy.manager.Date.ResultData;
 import com.hy.manager.entity.order.Returnthings;
 import com.hy.manager.entity.order.Seckill;
+import com.hy.manager.entity.product.Product;
 import com.hy.manager.service.order.IReturnthingsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -79,9 +81,20 @@ public class ReturnthingsController {
 
         PageHelper.startPage(currentPage, pageSize);
         List<Seckill> seckillList=iReturnthingsService.selectSeckill(seckill);
-        //查询条数
+        //查询条数  以及判断是否结束
         for (Seckill a : seckillList) {
             a.setCounts(iReturnthingsService.seckillCounts(a.getSeckillId()));
+
+            Date date=new Date();
+            if(date.compareTo(a.getStarTime())>0 && date.compareTo(a.getEndTime())<0){
+                a.setStatus(1);
+            }else{
+                a.setStatus(2);
+                a.setPutOrNot(2);
+
+                //修改状态
+                iReturnthingsService.updateStatus(a.getSeckillId(),a.getStatus(),a.getPutOrNot());
+            }
         }
         resultData.setDataSize(seckillListSize.size());
         resultData.setData(seckillList);
@@ -105,12 +118,81 @@ public class ReturnthingsController {
     //新增秒杀活动
     @ResponseBody
     @RequestMapping("/addSeckill")
-    public Integer addSeckill(String title , String starTime, String endTime, String seckillStarTime, String seckillEndTime){
+    public Integer addSeckill(Seckill seckill){
         try {
-            iReturnthingsService.addSeckill(title, starTime, endTime, seckillStarTime, seckillEndTime);
+            iReturnthingsService.addSeckill(seckill);
         }catch (Exception e){
             return 0;
         }
         return 1;
     }
+
+
+    //删除秒杀活动
+    @ResponseBody
+    @RequestMapping("/deleteSeckill")
+    public Integer deleteSeckill(Integer seckillId){
+        try {
+            iReturnthingsService.deleteSeckill(seckillId);
+        }catch (Exception e){
+            return 0;
+        }
+        return 1;
+    }
+
+
+    //修改秒杀活动
+    @ResponseBody
+    @RequestMapping("/updateSeckill")
+    public Integer updateSeckill(Seckill seckill){
+        try {
+            iReturnthingsService.updateSeckill(seckill);
+        }catch (Exception e){
+            return 0;
+        }
+        return 1;
+    }
+
+//根据秒杀查询商品
+@ResponseBody
+@RequestMapping("/productList")
+public  ResultData productList(@RequestParam("currentPage") int currentPage,
+                                 @RequestParam("pageSize") int pageSize,Integer seckillId){
+    ResultData resultData=new ResultData();
+    List<Product> productListSize=iReturnthingsService.productList(seckillId);
+
+    PageHelper.startPage(currentPage, pageSize);
+    List<Product> productList=iReturnthingsService.productList(seckillId);
+    resultData.setDataSize(productListSize.size());
+    resultData.setData(productList);
+    return resultData;
+}
+
+    //在活动中下架商品
+    @ResponseBody
+    @RequestMapping("/deleterProduct")
+    public Integer deleterProduct(Integer pid){
+        try {
+            iReturnthingsService.deleterProduct(pid);
+        }catch (Exception e){
+            return 0;
+        }
+        return 1;
+    }
+
+    //查询所有商品
+    @ResponseBody
+    @RequestMapping("/allProductList")
+    public  ResultData allProductList(@RequestParam("currentPage") int currentPage,
+                                   @RequestParam("pageSize") int pageSize){
+        ResultData resultData=new ResultData();
+        List<Product> productListSize=iReturnthingsService.allProductList();
+
+        PageHelper.startPage(currentPage, pageSize);
+        List<Product> productList=iReturnthingsService.allProductList();
+        resultData.setDataSize(productListSize.size());
+        resultData.setData(productList);
+        return resultData;
+    }
+
 }

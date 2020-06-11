@@ -3,6 +3,7 @@ package com.hy.manager.mapper.order;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hy.manager.entity.order.Returnthings;
 import com.hy.manager.entity.order.Seckill;
+import com.hy.manager.entity.product.Product;
 import com.hy.manager.mapper.order.Dao.ReturnThingsDao;
 import org.apache.ibatis.annotations.*;
 
@@ -31,7 +32,7 @@ public interface ReturnthingsMapper extends BaseMapper<Returnthings> {
     @UpdateProvider(type = ReturnThingsDao.class, method = "batch")
     public void batch(String[] batchList,String type);
 
-    //退货列表
+    //秒杀列表
     @SelectProvider(type = ReturnThingsDao.class, method = "selectSeckill")
     public List<Seckill> selectSeckill(Seckill seckill);
 
@@ -42,10 +43,35 @@ public interface ReturnthingsMapper extends BaseMapper<Returnthings> {
 
     //新增
     @Insert("insert into seckill(title,status,starTime,endTime,putOrNot,seckillStarTime,seckillEndTime) values(#{title},1,#{starTime},#{endTime},1,#{seckillStarTime},#{seckillEndTime})")
-    public void addSeckill(String title , String starTime, String endTime, String seckillStarTime, String seckillEndTime);
+    public void addSeckill(Seckill seckill);
 
     //商品条数
     @Select("select count(seckillId) from product where seckillId=#{seckillId}")
     public Integer seckillCounts(Integer seckillId);
 
+
+    //删除秒杀
+    @Update("update seckill set status=3  where seckillId=#{seckillId}")
+    public Integer deleteSeckill(Integer seckillId);
+
+    //修改秒杀
+    @Update("update seckill set title=#{title},status=#{status},starTime=#{starTime},endTime=#{endTime},putOrNot=#{putOrNot},seckillStarTime=#{seckillStarTime},seckillEndTime=#{seckillEndTime} where seckillId=#{seckillId}")
+    public void updateSeckill(Seckill seckill);
+
+    //修改秒杀
+    @Update("update seckill set status=#{status},putOrNot=#{putOrNot} where seckillId=#{seckillId}")
+    public void updateStatus(Integer seckillId,Integer status,Integer putOrNot);
+
+    //查询秒杀商品
+    @Select("select * from product where upStatus=1 and status=1 and seckillId=#{seckillId}")
+    public List<Product> productList(Integer seckillId);
+
+
+    //在活动中下架商品
+    @Update("update product set seckillId=null where pid=#{pid}")
+    public void deleterProduct(Integer pid);
+
+    //查询所有商品
+    @Select("select * from product where upStatus=1 and status=1 and seckillId is null")
+    public List<Product> allProductList();
 }
