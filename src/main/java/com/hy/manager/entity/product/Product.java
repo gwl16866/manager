@@ -64,6 +64,7 @@ public class Product implements Serializable {
     private Integer seckillNumber;
     private Integer residueNumber;
     private Integer purchaseNumber;
+    private Integer counts;
 
 
     public static long getSerialVersionUID() {

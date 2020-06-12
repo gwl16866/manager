@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.hy.manager.entity.order.Returnthings;
 import com.hy.manager.entity.order.Seckill;
 import com.hy.manager.entity.product.Product;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -47,7 +48,8 @@ public interface IReturnthingsService extends IService<Returnthings> {
 
     //修改活动状态
     public void updateStatus(Integer seckillId,Integer status,Integer putOrNot);
-
+/*    //修改活动状态
+    public void updateSta(Integer seckillId,Integer status);*/
 
     //查询秒杀商品
     public List<Product> productList(Integer seckillId);
@@ -58,4 +60,11 @@ public interface IReturnthingsService extends IService<Returnthings> {
 
     //查询所有商品
     public List<Product> allProductList();
+
+    //修改商品
+    public void updateProductSubmint(Product product);
+
+
+    //批量查询
+    public List<Product> search(@Param("batchList")String[] batchList);
 }

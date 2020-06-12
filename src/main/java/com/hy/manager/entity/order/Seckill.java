@@ -21,4 +21,6 @@ public class Seckill {
     private String seckillStarTime;
     private String seckillEndTime;
     private Integer counts;
+
+    private String[] productCounts;
 }

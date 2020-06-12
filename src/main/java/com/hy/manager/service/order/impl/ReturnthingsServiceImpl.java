@@ -6,6 +6,7 @@ import com.hy.manager.entity.order.Seckill;
 import com.hy.manager.entity.product.Product;
 import com.hy.manager.mapper.order.ReturnthingsMapper;
 import com.hy.manager.service.order.IReturnthingsService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -82,7 +83,10 @@ public class ReturnthingsServiceImpl extends ServiceImpl<ReturnthingsMapper, Ret
     public void updateStatus(Integer seckillId, Integer status, Integer putOrNot) {
         returnthingsMapper.updateStatus(seckillId, status, putOrNot);
     }
-
+//    //修改活动状态
+//    public void updateSta(Integer seckillId, Integer status) {
+//        returnthingsMapper.updateSta(seckillId, status);
+//    }
 
 
     //查询秒杀商品
@@ -99,4 +103,14 @@ public class ReturnthingsServiceImpl extends ServiceImpl<ReturnthingsMapper, Ret
     public List<Product> allProductList(){
         return  returnthingsMapper.allProductList();
     };
+
+    //修改商品
+    public void updateProductSubmint(Product product){
+        returnthingsMapper.updateProductSubmint(product);
+    };
+
+    //批量查询
+    public List<Product> search(@Param("batchList")String[] batchList){
+       return  returnthingsMapper.search(batchList);
+    }
 }

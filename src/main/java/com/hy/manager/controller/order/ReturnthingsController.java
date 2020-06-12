@@ -6,6 +6,7 @@ import com.hy.manager.entity.order.Returnthings;
 import com.hy.manager.entity.order.Seckill;
 import com.hy.manager.entity.product.Product;
 import com.hy.manager.service.order.IReturnthingsService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -88,6 +89,7 @@ public class ReturnthingsController {
             Date date=new Date();
             if(date.compareTo(a.getStarTime())>0 && date.compareTo(a.getEndTime())<0){
                 a.setStatus(1);
+                iReturnthingsService.updateStatus(a.getSeckillId(),a.getStatus(),a.getPutOrNot());
             }else{
                 a.setStatus(2);
                 a.setPutOrNot(2);
@@ -193,6 +195,41 @@ public  ResultData productList(@RequestParam("currentPage") int currentPage,
         resultData.setDataSize(productListSize.size());
         resultData.setData(productList);
         return resultData;
+    }
+
+    //修改商品
+    @ResponseBody
+    @RequestMapping("/updateProductSubmint")
+    public Integer updateProductSubmint(Product product){
+        try {
+            iReturnthingsService.updateProductSubmint(product);
+        }catch (Exception e){
+            return 0;
+        }
+        return 1;
+    }
+
+
+
+    //批量查询
+    @ResponseBody
+    @RequestMapping("/search")
+    public  ResultData search(@Param("batchList")String[] batchList){
+        System.out.println("con++++++++++++++++++++++++"+batchList);
+        ResultData resultData=new ResultData();
+        List<Product> productList=iReturnthingsService.search(batchList);
+        resultData.setData(productList);
+        return resultData;
+    }
+
+    //批量添加
+    @ResponseBody
+    @RequestMapping("/batchAdd")
+    public Integer batchAdd(List<Product> product,String[] batchList,Integer seckillId){
+
+        System.out.println(product);
+
+        return 1;
     }
 
 }

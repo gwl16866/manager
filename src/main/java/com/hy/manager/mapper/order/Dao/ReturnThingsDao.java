@@ -72,4 +72,21 @@ public class ReturnThingsDao {
         }
         return sql.toString();
     }
+
+
+
+    //批量查询
+    public String search(@Param("batchList")String[] batchList){
+        StringBuffer sb = new StringBuffer();
+        sb.append("select * from product where pid in (");
+        for(int i=0;i<batchList.length;i++){
+            sb.append(batchList[i]);
+            if(i<batchList.length-1){
+                sb.append(",");
+            }
+            System.out.println("dao======================================="+batchList);
+        }
+        sb.append(")");
+        return sb.toString();
+    };
 }
