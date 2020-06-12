@@ -3,13 +3,16 @@ package com.hy.manager.controller.product;
 
 import com.github.pagehelper.PageHelper;
 import com.hy.manager.Date.ResultData;
+import com.hy.manager.entity.product.AddProduct;
 import com.hy.manager.entity.product.ClassModel;
 import com.hy.manager.entity.product.ClassesBo;
 import com.hy.manager.entity.product.Product;
 import com.hy.manager.service.product.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -243,7 +246,7 @@ public class ProductController {
 
 
     /**
-     *  查询规格 或颜色
+     *  查询规格 或颜色 带分页
      */
     @RequestMapping("/queryClassModel")
     public ResultData queryClassModel( @RequestParam("currentPage") int currentPage,
@@ -256,6 +259,21 @@ public class ProductController {
         resultData.setDataSize(list.size());
         return resultData;
     }
+
+
+
+    /**
+     *  查询规格 或颜色 不带分页
+     */
+    @RequestMapping("/queryClassModelOrColor")
+    public ResultData queryClassModelOrColor(ClassModel classModel){
+        ResultData resultData = new ResultData();
+        resultData.setData(productService.queryClassModel(classModel));
+        return resultData;
+    }
+
+
+
 
 
     /**
@@ -287,6 +305,22 @@ public class ProductController {
         }
         return resultData;
     }
+
+
+
+    /**
+     *添加商品
+     */
+    @PostMapping("addProduct")
+    public ResultData addProduct(@RequestBody(required = false) List<AddProduct> addList,Product product){
+        ResultData resultData = new ResultData();
+        System.out.println(addList);
+        return resultData;
+    }
+
+
+
+
 
 
 
