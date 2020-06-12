@@ -62,6 +62,7 @@ public interface ReturnthingsMapper extends BaseMapper<Returnthings> {
     @Update("update seckill set status=#{status},putOrNot=#{putOrNot} where seckillId=#{seckillId}")
     public void updateStatus(Integer seckillId,Integer status,Integer putOrNot);
 
+
     //查询秒杀商品
     @Select("select * from product where upStatus=1 and status=1 and seckillId=#{seckillId}")
     public List<Product> productList(Integer seckillId);
@@ -72,6 +73,14 @@ public interface ReturnthingsMapper extends BaseMapper<Returnthings> {
     public void deleterProduct(Integer pid);
 
     //查询所有商品
-    @Select("select * from product where upStatus=1 and status=1 and seckillId is null")
+    @Select("select p.* from product p where p.seckillId is null or p.seckillId in(select seckillId from  seckill where status !=1) and p.upStatus=1 and p.status=1 ")
     public List<Product> allProductList();
+
+    //修改商品
+    @Update("update product set seckillPrice=#{seckillPrice},seckillNumber=#{seckillNumber},residueNumber=#{residueNumber},purchaseNumber=#{purchaseNumber} where pid=#{pid}")
+    public void updateProductSubmint(Product product);
+
+    //批量查询
+    @SelectProvider(type = ReturnThingsDao.class, method = "search")
+    public List<Product> search(@Param("batchList")String[] batchList);
 }

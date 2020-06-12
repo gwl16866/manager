@@ -19,13 +19,17 @@ public class ProductProvider {
 
         if(!StringUtils.isEmpty(product.getProductName())){
             sb.append(" and CONCAT(productName,productNumber) LIKE '%"+product.getProductName()+"%'");
-        }else if(!StringUtils.isEmpty(product.getClasses())){
+        }
+        if(!StringUtils.isEmpty(product.getClasses())){
             sb.append(" and c.id = "+product.getClasses()+"");
-        }else if(!StringUtils.isEmpty(product.getStatus())){
+        }
+        if(!StringUtils.isEmpty(product.getStatus())){
             sb.append(" and p.status = "+product.getStatus()+"");
-        }else if(!StringUtils.isEmpty(product.getUpStatus())){
+        }
+        if(!StringUtils.isEmpty(product.getUpStatus())){
             sb.append(" and p.upStatus = "+product.getUpStatus()+"");
-        }else if(!StringUtils.isEmpty(product.getIsShow())){
+        }
+        if(!StringUtils.isEmpty(product.getIsShow())){
             sb.append(" and p.isShow =2");
         }
 
