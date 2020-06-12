@@ -24,7 +24,7 @@ public class QuantityServiceImpl extends ServiceImpl<QuantityMapper, Quantity> i
     QuantityMapper quantityMapper;
 
     //库存列表
-    public List<Quantity> selectQuantity(String productOrNumber, Integer status,String time){
-        return quantityMapper.selectQuantity(productOrNumber, status,time);
+    public List<Quantity> selectQuantity(String productOrNumber, String controlClass,String time){
+        return quantityMapper.selectQuantity(productOrNumber, controlClass,time);
     };
 }

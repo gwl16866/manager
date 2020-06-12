@@ -1,6 +1,10 @@
 package com.hy.manager.mapper.order.Dao;
 
+import com.hy.manager.entity.order.Seckill;
 import org.apache.ibatis.annotations.Param;
+
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class ReturnThingsDao {
     //退货列表
@@ -16,7 +20,7 @@ public class ReturnThingsDao {
        }
        //退货时间
        if (null != time && time !="") {
-           sql.append(" and substr(rs.applyTime,1,10) = '"+time+"'");
+           sql.append(" and substr(rs.applyTime,1,10) >= '"+time+"'");
        }
        if(null !=applyStatus ){
            sql.append(" and rs.applyStatus = "+applyStatus);
@@ -43,4 +47,46 @@ public class ReturnThingsDao {
         sb.append(")");
         return sb.toString();
     }
+
+
+    //秒杀
+    public String selectSeckill(Seckill seckill) {
+        StringBuffer sql = new StringBuffer("select s.* from seckill s where  s.status !=3 and 1=1 ");
+        //标题
+        if (null != seckill.getTitle() && seckill.getTitle() !="") {
+            sql.append(" and s.title like '%" + seckill.getTitle() + "%'");
+        }
+        //开始时间
+        if (null != seckill.getStarTime() ) {
+            SimpleDateFormat s=new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+            sql.append(" and s.starTime >= '"+s.format(seckill.getStarTime())+"'");
+        }
+        //结束
+        if (null != seckill.getEndTime() ) {
+            SimpleDateFormat s=new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+            sql.append(" and s.endTime <= '"+s.format(seckill.getEndTime())+"'");
+        }
+        //状态
+        if(null !=seckill.getStatus() ){
+            sql.append(" and s.status = "+seckill.getStatus());
+        }
+        return sql.toString();
+    }
+
+
+
+    //批量查询
+    public String search(@Param("batchList")String[] batchList){
+        StringBuffer sb = new StringBuffer();
+        sb.append("select * from product where pid in (");
+        for(int i=0;i<batchList.length;i++){
+            sb.append(batchList[i]);
+            if(i<batchList.length-1){
+                sb.append(",");
+            }
+            System.out.println("dao======================================="+batchList);
+        }
+        sb.append(")");
+        return sb.toString();
+    };
 }
