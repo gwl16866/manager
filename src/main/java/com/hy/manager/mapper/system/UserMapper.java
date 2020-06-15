@@ -1,9 +1,11 @@
 package com.hy.manager.mapper.system;
 
+import com.hy.manager.entity.system.DeskPojo;
 import com.hy.manager.entity.system.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,4 +42,18 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select("select count(*) from orders")
     public int ordercount();
+
+    @Select("SELECT COUNT(*) val,DATE_FORMAT(insert_date,'%m') month FROM user GROUP BY DATE_FORMAT(insert_date,'%Y%m')ORDER BY DATE_FORMAT(insert_date,'%Y%m')")
+    public ArrayList<DeskPojo> selectSumUsers();
+
+    @Select("SELECT COUNT(*)val,DATE_FORMAT(insert_date,'%m') month FROM returnmoney GROUP BY DATE_FORMAT(insert_date,'%Y%m') ORDER BY DATE_FORMAT(insert_date,'%Y%m')")
+    public ArrayList<DeskPojo> selectMessage();
+
+    @Select("SELECT sum(sumMoney) val,DATE_FORMAT(insert_date,'%m') month FROM orders GROUP BY DATE_FORMAT(insert_date,'%Y%m') ORDER BY DATE_FORMAT(insert_date,'%Y%m')")
+    public ArrayList<DeskPojo> selectMoney();
+
+    @Select("SELECT COUNT(*)val,DATE_FORMAT(insert_date,'%m') month FROM orders GROUP BY DATE_FORMAT(insert_date,'%Y%m') ORDER BY DATE_FORMAT(insert_date,'%Y%m')")
+    public ArrayList<DeskPojo> selectShopping();
+
+
 }

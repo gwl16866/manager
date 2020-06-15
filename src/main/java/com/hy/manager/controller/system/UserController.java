@@ -2,6 +2,7 @@ package com.hy.manager.controller.system;
 
 
 import com.hy.manager.entity.customer.Customer;
+import com.hy.manager.entity.system.FourObject;
 import com.hy.manager.entity.system.User;
 import com.hy.manager.service.system.IUserService;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -79,5 +80,14 @@ public class UserController {
         return userService.ordercount();
     }
 
-
+    @CrossOrigin
+    @RequestMapping("/selectFour")
+    public FourObject selectFour() {
+        FourObject fo = new FourObject();
+        fo.setPeoples(userService.selectSumUsers());
+        fo.setMessage(userService.selectMessage());
+        fo.setMoney(userService.selectMoney());
+        fo.setShopping(userService.selectShopping());
+        return fo;
+    }
 }

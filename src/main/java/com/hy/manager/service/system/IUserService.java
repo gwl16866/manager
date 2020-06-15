@@ -3,6 +3,7 @@ package com.hy.manager.service.system;
 import com.hy.manager.entity.system.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,4 +24,9 @@ public interface IUserService extends IService<User> {
     public int returnmonry();
     public int sales();
     public int ordercount();
+    public ArrayList<String> selectSumUsers();
+    public ArrayList<String> selectMessage();
+    public ArrayList<String> selectMoney();
+    public ArrayList<String> selectShopping();
+
 }
