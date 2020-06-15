@@ -21,7 +21,7 @@ import java.util.List;
 public class QuantityServiceImpl extends ServiceImpl<QuantityMapper, Quantity> implements IQuantityService {
 
     @Autowired
-    QuantityMapper quantityMapper;
+  private QuantityMapper quantityMapper;
 
     //库存列表
     public List<Quantity> selectQuantity(String productOrNumber, String controlClass,String time){
