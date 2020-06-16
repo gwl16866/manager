@@ -3,6 +3,7 @@ package com.hy.manager.mapper.order;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hy.manager.entity.order.Returnthings;
 import com.hy.manager.entity.order.Seckill;
+import com.hy.manager.entity.order.SeckillTwo;
 import com.hy.manager.entity.product.Product;
 import com.hy.manager.mapper.order.Dao.ReturnThingsDao;
 import org.apache.ibatis.annotations.*;
@@ -35,6 +36,9 @@ public interface ReturnthingsMapper extends BaseMapper<Returnthings> {
     //秒杀列表
     @SelectProvider(type = ReturnThingsDao.class, method = "selectSeckill")
     public List<Seckill> selectSeckill(Seckill seckill);
+    //秒杀列表
+    @SelectProvider(type = ReturnThingsDao.class, method = "selectSeckill")
+    public List<SeckillTwo> selectSeckillTwo(Seckill seckill);
 
 
     //上架/下架
@@ -56,7 +60,7 @@ public interface ReturnthingsMapper extends BaseMapper<Returnthings> {
 
     //修改秒杀
     @Update("update seckill set title=#{title},status=#{status},starTime=#{starTime},endTime=#{endTime},putOrNot=#{putOrNot},seckillStarTime=#{seckillStarTime},seckillEndTime=#{seckillEndTime} where seckillId=#{seckillId}")
-    public void updateSeckill(Seckill seckill);
+    public void updateSeckill(SeckillTwo seckill);
 
     //修改秒杀
     @Update("update seckill set status=#{status},putOrNot=#{putOrNot} where seckillId=#{seckillId}")
@@ -64,13 +68,15 @@ public interface ReturnthingsMapper extends BaseMapper<Returnthings> {
 
 
     //查询秒杀商品
-    @Select("select * from product where upStatus=1 and status=1 and seckillId=#{seckillId}")
-    public List<Product> productList(Integer seckillId);
+    @Select("select * from product where upStatus=1 and status=1 and pid in (${c})")
+    public List<Product> productList(String c);
 
 
-    //在活动中下架商品
+    //在活动中删除商品
     @Update("update product set seckillId=null where pid=#{pid}")
     public void deleterProduct(Integer pid);
+//    @Update("update seckill set productCounts=(${qwe}) where seckillId=${seckillId}")
+//    public void deletepid(String qwe,Integer seckillId);
 
     //查询所有商品
     @Select("select p.* from product p where p.seckillId is null or p.seckillId in(select seckillId from  seckill where status !=1) and p.upStatus=1 and p.status=1 ")
@@ -83,4 +89,11 @@ public interface ReturnthingsMapper extends BaseMapper<Returnthings> {
     //批量查询
     @SelectProvider(type = ReturnThingsDao.class, method = "search")
     public List<Product> search(@Param("batchList")String[] batchList);
+
+    @Update("update seckill set productCounts=#{productCounts} where seckillId=#{seckillId}")
+    public void setProductCounts(String productCounts,Integer seckillId);
+
+    //查询productCounts
+    @Select("select * from seckill where seckillId=#{seckillId}")
+    public Seckill pc(Integer seckillId);
 }
