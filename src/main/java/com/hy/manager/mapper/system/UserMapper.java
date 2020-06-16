@@ -61,6 +61,8 @@ public interface UserMapper extends BaseMapper<User> {
     public Integer addUserRoles(@Param("uid") Integer uid,@Param("haveRoles") String[] haveRoles);
 
 
+    @Delete("delete from userrole where uid =#{uid}")
+    public Integer deleteUserRoles(Integer uid);
 
 
 }
