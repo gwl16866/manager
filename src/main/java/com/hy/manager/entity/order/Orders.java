@@ -61,7 +61,7 @@ private Integer aid;
     private String aname;
 
     //数量
-    private Integer counts;
+    private Integer ocounts;
 
     //商品图片
     private String image;
