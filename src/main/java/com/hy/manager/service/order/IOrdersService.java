@@ -20,5 +20,6 @@ public interface IOrdersService extends IService<Orders> {
 
     //订单列表详情
     public Orders lookOrders(String orderNumber);
-
+    //修改
+    public void  updateInfo(String cname,String caddress,String cphone,Integer id);
 }

@@ -48,4 +48,19 @@ public class OrdersController {
       Orders orders=  iOrdersService.lookOrders(orderNumber);
         return orders;
     }
+
+
+    //修改订单信息
+    //修改商品
+    @ResponseBody
+    @RequestMapping("/updateInfo")
+    public Integer updateInfo(String cname,String caddress,String cphone,Integer id) {
+        try {
+            iOrdersService.updateInfo(cname,caddress,cphone,id);
+        } catch (Exception e) {
+            return 0;
+        }
+        return 1;
+    }
+
 }

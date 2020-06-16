@@ -47,4 +47,6 @@ public class Quantity implements Serializable {
 
     //数量
     private Integer counts;
+    //数量
+    private Integer ocounts;
 }

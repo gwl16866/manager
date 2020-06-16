@@ -34,6 +34,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public void userupd(User user,String[] haveRoles) {
 
         userMapper.userupd(user);
+        userMapper.deleteUserRoles(user.getUid());
         userMapper.addUserRoles(user.getUid(),haveRoles);
     }
 

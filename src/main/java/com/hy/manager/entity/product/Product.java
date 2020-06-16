@@ -1,9 +1,5 @@
 package com.hy.manager.entity.product;
 
-import java.math.BigDecimal;
-
-import java.time.LocalDate;
-
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -12,6 +8,7 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -25,10 +22,11 @@ import java.util.List;
  */
 @Data
 @TableName("product")
-public class Product  {
+public class Product implements Serializable {
 
+    private static final long serialVersionUID = 1L;
 
-    @TableId("pid")
+   @TableId("pid")
     private Integer pid;
 
     @TableField("productName")
@@ -55,15 +53,13 @@ public class Product  {
     @TableField("productModel")
     private String productModel;
 
+
     @TableField("productColor")
     private String productColor;
 
-
-
-
+    @TableField("marketDate")
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
     @DateTimeFormat(pattern = "yyyy-MM-dd")//前端到后端
-    @TableField("marketDate")
     private String marketDate;
 
     @TableField("productMaterials")
@@ -78,13 +74,37 @@ public class Product  {
     @TableField("classes")
     private Integer classes;
 
-    @TableField(exist = false)
-    private String className;
-
-    @TableField(exist = false)
-    private Integer isShow;
-
     @TableField("counts")
     private Integer counts;
 
+    @TableField("alarmCount")
+    private Integer alarmCount;
+
+    @TableField(value = "className",exist = false)
+    private String className;
+
+
+
+
+    @TableField("isShow")
+    private Integer isShow;
+
+
+    @TableField(value = "addList",exist = false)
+    private List<AddProduct> addList;
+
+    @TableField("seckillPrice")
+    private BigDecimal seckillPrice;
+
+    @TableField("seckillNumber")
+    private Integer seckillNumber;
+
+    @TableField("residueNumber")
+    private Integer residueNumber;
+
+    @TableField("purchaseNumber")
+    private Integer purchaseNumber;
+
+    @TableField("seckillId")
+    private Integer seckillId;
 }

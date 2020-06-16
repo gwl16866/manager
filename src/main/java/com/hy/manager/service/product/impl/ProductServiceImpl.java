@@ -137,8 +137,20 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         Integer num=0;
         for(int i=0;i<productList.size();i++){
             product.setProductNumber(returnDateStr());
+            //添加商品
             num = productMapper.addProduct(product,productList.get(i));
+            //添加订单 增加库存
+            productMapper.addOrders(productList.get(i).getCounts());
+            Integer maxOrderId = productMapper.maxOrderId();
+            Integer pid = productMapper.maxPid();
+            //添加库存记录
+            productMapper.addCounts(pid,maxOrderId,productList.get(i).getCounts(),1);
         }
+
+
+
+
+
         return num;
     }
 

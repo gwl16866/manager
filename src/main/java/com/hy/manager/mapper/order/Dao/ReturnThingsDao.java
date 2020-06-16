@@ -4,7 +4,6 @@ import com.hy.manager.entity.order.Seckill;
 import org.apache.ibatis.annotations.Param;
 
 import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 public class ReturnThingsDao {
     //退货列表
@@ -57,14 +56,16 @@ public class ReturnThingsDao {
             sql.append(" and s.title like '%" + seckill.getTitle() + "%'");
         }
         //开始时间
-        if (null != seckill.getStarTime() ) {
-            SimpleDateFormat s=new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-            sql.append(" and s.starTime >= '"+s.format(seckill.getStarTime())+"'");
+        if (null != seckill.getStarTime()&&"".equals(seckill.getStarTime()) ) {
+
+//            SimpleDateFormat s=new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+            SimpleDateFormat s=new SimpleDateFormat("yyyy-MM-dd");
+            sql.append(" and s.starTime >= '"+s.format(seckill.getStarTime()).toString()+"'");
         }
         //结束
-        if (null != seckill.getEndTime() ) {
-            SimpleDateFormat s=new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-            sql.append(" and s.endTime <= '"+s.format(seckill.getEndTime())+"'");
+        if (null != seckill.getEndTime() &&"".equals(seckill.getEndTime())) {
+            SimpleDateFormat s=new SimpleDateFormat("yyyy-MM-dd");
+            sql.append(" and s.endTime <= '"+s.format(seckill.getEndTime()).toString()+"'");
         }
         //状态
         if(null !=seckill.getStatus() ){
@@ -84,9 +85,9 @@ public class ReturnThingsDao {
             if(i<batchList.length-1){
                 sb.append(",");
             }
-            System.out.println("dao======================================="+batchList);
-        }
+            }
         sb.append(")");
         return sb.toString();
     };
+
 }

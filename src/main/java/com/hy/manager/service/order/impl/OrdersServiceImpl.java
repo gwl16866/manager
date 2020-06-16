@@ -33,4 +33,10 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
     public Orders lookOrders(String orderNumber) {
         return ordersMapper.lookOrders(orderNumber);
     }
+
+    //修改
+    public void  updateInfo(String cname,String caddress,String cphone,Integer id){
+        ordersMapper.updateInfo(cname,caddress,cphone,id);
+    };
+
 }

@@ -6,7 +6,7 @@ public class RoleProvider {
 
 
     /**
-     *
+     *查询role列表
      * @param name
      * @return
      */
@@ -20,6 +20,12 @@ public class RoleProvider {
     }
 
 
+    /**
+     * 给用户添加角色
+     * @param uid
+     * @param haveRoles
+     * @return
+     */
     public String addUserRoles(@Param("uid") Integer uid, @Param("haveRoles") String []haveRoles){
         StringBuffer sb = new StringBuffer();
         sb.append("insert into userrole (uid,rid) values ");
@@ -35,7 +41,25 @@ public class RoleProvider {
     }
 
 
-
+    /**
+     * 添加权限
+     * @param havePerms
+     * @param rid
+     * @return
+     */
+    public String addRolePerms(@Param("haveRoles") String [] havePerms,@Param("rid") Integer rid){
+        StringBuffer sb = new StringBuffer();
+        sb.append("insert into rolepermission (rid,pid) values ");
+        for(int i=0;i<havePerms.length;i++){
+            sb.append("(");
+            sb.append(rid+","+havePerms[i]);
+            sb.append(")");
+            if(i<havePerms.length-1){
+                sb.append(",");
+            }
+        }
+        return sb.toString();
+    }
 
 
 
