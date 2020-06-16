@@ -3,6 +3,7 @@ package com.hy.manager.service.order;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hy.manager.entity.order.Returnthings;
 import com.hy.manager.entity.order.Seckill;
+import com.hy.manager.entity.order.SeckillTwo;
 import com.hy.manager.entity.product.Product;
 import org.apache.ibatis.annotations.Param;
 
@@ -28,6 +29,8 @@ public interface IReturnthingsService extends IService<Returnthings> {
 
     //秒杀
     public List<Seckill> selectSeckill(Seckill seckill);
+    //秒杀
+    public List<SeckillTwo> selectSeckillTwo(Seckill seckill);
 
     //上架/下架
     public void putOrNot(Integer seckillId,Integer putOrNot);
@@ -44,7 +47,7 @@ public interface IReturnthingsService extends IService<Returnthings> {
 
 
     //修改秒杀
-    public void updateSeckill(Seckill seckill);
+    public void updateSeckill(SeckillTwo seckill);
 
     //修改活动状态
     public void updateStatus(Integer seckillId,Integer status,Integer putOrNot);
@@ -52,11 +55,12 @@ public interface IReturnthingsService extends IService<Returnthings> {
     public void updateSta(Integer seckillId,Integer status);*/
 
     //查询秒杀商品
-    public List<Product> productList(Integer seckillId);
+    public List<Product> productList(String c);
 
 
-    //在活动中下架商品
+    //在活动中删除商品
     public void deleterProduct(Integer pid);
+    public void deletepid(Integer pid,String c,Integer seckillId);
 
     //查询所有商品
     public List<Product> allProductList();
@@ -67,4 +71,9 @@ public interface IReturnthingsService extends IService<Returnthings> {
 
     //批量查询
     public List<Product> search(@Param("batchList")String[] batchList);
+
+
+    public void setProductCounts(String productCounts,Integer seckillId);
+    public Seckill pc(Integer seckillId);
+
 }

@@ -18,8 +18,10 @@ public class Orders implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private Integer id;
     //订单编号
     private String orderNumber;
+private Integer aid;
 
     //提交时间
     private String submitDate;
@@ -69,4 +71,8 @@ public class Orders implements Serializable {
     private String productColor;
     //商品货号
     private String productNumber;
+
+    private String cname;
+    private String cphone;
+    private String caddress;
 }

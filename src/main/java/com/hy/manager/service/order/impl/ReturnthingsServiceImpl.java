@@ -3,6 +3,7 @@ package com.hy.manager.service.order.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hy.manager.entity.order.Returnthings;
 import com.hy.manager.entity.order.Seckill;
+import com.hy.manager.entity.order.SeckillTwo;
 import com.hy.manager.entity.product.Product;
 import com.hy.manager.mapper.order.ReturnthingsMapper;
 import com.hy.manager.service.order.IReturnthingsService;
@@ -44,7 +45,10 @@ public class ReturnthingsServiceImpl extends ServiceImpl<ReturnthingsMapper, Ret
     //秒杀
     public List<Seckill> selectSeckill(Seckill seckill) {
         return returnthingsMapper.selectSeckill(seckill);
-    }
+}
+    public List<SeckillTwo> selectSeckillTwo(Seckill seckill){
+        return returnthingsMapper.selectSeckillTwo(seckill);
+    };
 
     //上架/下架
     public void putOrNot(Integer seckillId, Integer putOrNot) {
@@ -75,7 +79,7 @@ public class ReturnthingsServiceImpl extends ServiceImpl<ReturnthingsMapper, Ret
 
 
     //修改秒杀
-    public void updateSeckill(Seckill seckill) {
+    public void updateSeckill(SeckillTwo seckill) {
         returnthingsMapper.updateSeckill(seckill);
     }
 
@@ -90,13 +94,28 @@ public class ReturnthingsServiceImpl extends ServiceImpl<ReturnthingsMapper, Ret
 
 
     //查询秒杀商品
-    public  List<Product> productList(Integer seckillId){
-        return  returnthingsMapper.productList(seckillId);
+    public  List<Product> productList(String c){
+        return  returnthingsMapper.productList(c);
     };
 
     //在活动中下架商品
     public void deleterProduct(Integer pid){
         returnthingsMapper.deleterProduct(pid);
+    }
+    public void deletepid(Integer pid,String c,Integer seckillId){
+       String[]  s=c.split(",");
+       StringBuffer sr= new StringBuffer();
+       for (int i=0;i<s.length;i++){
+           if(!pid.toString().equals(s[i])){
+               sr.append(s[i]);
+               if(i<s.length-1){
+                   sr.append(",");
+               }
+           }
+       }
+        String qwe=  sr.toString();
+       System.out.println("qwe============================="+qwe);
+        returnthingsMapper.setProductCounts(qwe,seckillId);
     }
 
     //查询所有商品
@@ -113,4 +132,13 @@ public class ReturnthingsServiceImpl extends ServiceImpl<ReturnthingsMapper, Ret
     public List<Product> search(@Param("batchList")String[] batchList){
        return  returnthingsMapper.search(batchList);
     }
+
+    public void setProductCounts(String productCounts,Integer seckillId){
+        returnthingsMapper.setProductCounts(productCounts,seckillId);
+    };
+
+
+    public Seckill pc(Integer seckillId){
+        return returnthingsMapper.pc(seckillId);
+    };
 }

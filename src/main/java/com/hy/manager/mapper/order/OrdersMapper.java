@@ -6,6 +6,7 @@ import com.hy.manager.mapper.order.Dao.OrderDao;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -26,4 +27,9 @@ public interface OrdersMapper extends BaseMapper<Orders> {
     //查看订单详情
     @Select("select o.*,c.*,p.* from orders o,product p,customer c where o.userId=c.id and o.productId=p.pid and o.orderNumber =#{orderNumber} ")
     public Orders lookOrders(String orderNumber);
+
+
+    //修改
+    @Update("update orders set cname=#{cname},caddress=#{caddress},cphone=#{cphone} where id=#{id}")
+    public void updateInfo(String cname,String caddress,String cphone,Integer id);
 }
