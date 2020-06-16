@@ -1,8 +1,6 @@
 package com.hy.manager.mapper.product;
 
-import com.hy.manager.entity.product.ClassModel;
-import com.hy.manager.entity.product.ClassesBo;
-import com.hy.manager.entity.product.Product;
+import com.hy.manager.entity.product.*;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.*;
 
@@ -44,6 +42,16 @@ public interface ProductMapper extends BaseMapper<Product> {
      */
     @Select("SELECT * FROM classes")
     public List<ClassesBo> selectClasses();
+
+    /**
+     * @return 查询所有可用类别
+     */
+    @Select("SELECT * FROM classes where status=1")
+    public List<ClassesBo> queryGoodClasses();
+
+
+
+
 
     /**
      *
@@ -140,7 +148,25 @@ public interface ProductMapper extends BaseMapper<Product> {
     public Integer delModelOrColor(ClassModel classModel);
 
 
+    /**
+     * 添加商品
+     * @param product
+     * @param productForm
+     * @return
+     */
+    @Insert("insert into product" +
+            "(productName,price,productNumber,sellVolume,status,upStatus,image,productModel,productColor,marketDate,productMaterials,productUser,classes,isShow,counts,alarmCount)values" +
+            "(#{product.productName},#{productForm.price},#{product.productNumber},0,2,2,#{product.image},#{productForm.model},#{productForm.color},#{product.marketDate},#{product.productMaterials},#{product.productUser},#{product.classes},1,#{productForm.counts},#{productForm.alarm})")
+    public Integer addProduct(@Param("product") Product product,@Param("productForm") AddProduct productForm);
 
+
+    /**
+     * 查询商品货号
+     * @param num
+     * @return
+     */
+    @Select("select count(*) from product where productNumber = #{num}")
+    public Integer queryPNum(String num);
 
 
 }

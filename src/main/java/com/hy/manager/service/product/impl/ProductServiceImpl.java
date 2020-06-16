@@ -1,16 +1,18 @@
 package com.hy.manager.service.product.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.hy.manager.entity.product.ClassModel;
-import com.hy.manager.entity.product.ClassesBo;
-import com.hy.manager.entity.product.Product;
+import com.hy.manager.entity.product.*;
 import com.hy.manager.mapper.product.ProductMapper;
 import com.hy.manager.service.product.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 /**
  * <p>
@@ -26,6 +28,9 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
     @Autowired
     private ProductMapper productMapper;
 
+    public static final int START = 100;   //定义范围开始数字
+
+    public static final int END = 999; //定义范围结束数字
 
     @Override
     public List<Product> selectProductList(Product product) {
@@ -36,6 +41,12 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
     public List<ClassesBo> selectClasses() {
         return productMapper.selectClasses();
     }
+
+    @Override
+    public List<ClassesBo> queryGoodClasses() {
+        return productMapper.queryGoodClasses();
+    }
+
 
     @Override
     public List<ClassesBo> queryClassesTable(Integer classId) {
@@ -105,5 +116,34 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
     @Override
     public List<ClassModel> queryClassModel(ClassModel classModel) {
         return productMapper.queryClassModel(classModel);
+    }
+
+
+    public String returnDateStr (){
+       Date date=new Date();
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("YYYYMMDDHHmmss");
+        String s= simpleDateFormat.format(date);
+        Random random=new Random();
+        //产生随机数
+        int number = random.nextInt(END - START + 1) + START;
+        return s+number;
+    }
+
+
+    @Override
+    public Integer addProduct(Contain contain) {
+        List<AddProduct> productList = contain.getAddList();
+        Product product = contain.getProduct();
+        Integer num=0;
+        for(int i=0;i<productList.size();i++){
+            product.setProductNumber(returnDateStr());
+            num = productMapper.addProduct(product,productList.get(i));
+        }
+        return num;
+    }
+
+    @Override
+    public Integer queryPNum(String num) {
+        return productMapper.queryPNum(num);
     }
 }

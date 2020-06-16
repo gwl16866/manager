@@ -3,18 +3,18 @@ package com.hy.manager.controller.product;
 
 import com.github.pagehelper.PageHelper;
 import com.hy.manager.Date.ResultData;
-import com.hy.manager.entity.product.AddProduct;
-import com.hy.manager.entity.product.ClassModel;
-import com.hy.manager.entity.product.ClassesBo;
-import com.hy.manager.entity.product.Product;
+import com.hy.manager.entity.product.*;
 import com.hy.manager.service.product.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * <p>
@@ -49,6 +49,7 @@ public class ProductController {
         return resultData;
     }
 
+
     /**
      * 查询所有类别表table分页
      * @return
@@ -66,6 +67,18 @@ public class ProductController {
     }
 
 
+    /**
+     * 修改商品
+     * @param product
+     * @return
+     */
+    @PostMapping("/updateProduct")
+    public boolean updateProduct(Product product){
+        return  productService.saveOrUpdate(product);
+    }
+
+
+
 
     /**
      * 根据id查一条商品
@@ -77,7 +90,6 @@ public class ProductController {
         List<Product> list =new ArrayList<>();
         list.add(productService.queryProductById(pid));
         return list;
-
     }
 
 
@@ -89,6 +101,19 @@ public class ProductController {
     public List<ClassesBo> selectClasses(){
        return productService.selectClasses();
     }
+
+    /**
+     * 查询所有可用的类别
+     * @return
+     */
+    @RequestMapping("/queryGoodClasses")
+    public List<ClassesBo> queryGoodClasses(){
+        return productService.queryGoodClasses();
+    }
+
+
+
+
 
     /**
      *修改上架状态
@@ -125,10 +150,10 @@ public class ProductController {
             Product xiajiaProduct = new Product();
             xiajiaProduct.setPid(product.getPid());
             xiajiaProduct.setUpStatus(2);
-            Integer xiajiaVal = productService.updateUpStatusById(xiajiaProduct);
+            productService.updateUpStatusById(xiajiaProduct);
 
         }
-        if(v >0 && isShowVal >0){
+        if(v >0){
             resultData.setCode(200);
         }else {
             resultData.setCode(400);
@@ -312,13 +337,49 @@ public class ProductController {
      *添加商品
      */
     @PostMapping("addProduct")
-    public ResultData addProduct(@RequestBody(required = false) List<AddProduct> addList,Product product){
+    public ResultData addProduct(@RequestBody Contain contain){
         ResultData resultData = new ResultData();
-        System.out.println(addList);
+       Integer num = productService.addProduct(contain);
+        if(num >0){
+            resultData.setCode(200);
+        }else {
+            resultData.setCode(400);
+        }
         return resultData;
     }
 
 
+    /**
+     * 查询商品货号是否重复
+     * @param num
+     * @return
+     */
+    @RequestMapping("queryPNum")
+    public Integer queryPNum(String num){
+        return productService.queryPNum(num);
+    }
+
+
+
+
+    //添加页面——上传文件
+    @ResponseBody
+    @RequestMapping(value = "/uploadFile")
+    public String uploadFile(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+        // 设置名称，不能重复，可以使用uuid
+        String picName = UUID.randomUUID().toString();
+        // 获取文件名
+        String oriName = file.getOriginalFilename();
+        // 获取后缀
+        String extName = oriName.substring(oriName.lastIndexOf("."));
+        try {
+            // 开始上传
+            file.transferTo(new File("E:/workspace-vue/vue-element-admin-master/src/dir/imgs/" + picName + extName));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return picName + extName;
+    }
 
 
 

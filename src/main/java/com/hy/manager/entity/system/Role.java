@@ -16,12 +16,12 @@ import java.io.Serializable;
 @Data
 public class Role implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
 
     private Integer rid;
 
-    private String role;
+    private Integer status;
+
+    private String roleName;
 
 
 }

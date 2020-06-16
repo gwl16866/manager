@@ -4,6 +4,7 @@ package com.hy.manager.entity.system;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -16,22 +17,16 @@ import java.io.Serializable;
 @Data
 public class Permiss implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
 
     private Integer pid;
 
-    /**
-     * Ȩ
-     */
     private String permissionName;
 
     private Integer parentId;
 
-    /**
-     * url
-     */
     private String url;
+
+    private List<Permiss> rolesList;
 
 
 }
