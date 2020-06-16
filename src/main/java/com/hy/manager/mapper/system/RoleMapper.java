@@ -4,10 +4,7 @@ import com.hy.manager.entity.product.ClassesBo;
 import com.hy.manager.entity.system.Role;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hy.manager.mapper.product.ProductProvider;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.SelectProvider;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -29,6 +26,17 @@ public interface RoleMapper extends BaseMapper<Role> {
      */
     @SelectProvider(type = RoleProvider.class,method = "queryRoles")
     public List<Role> queryRoles(String name);
+
+
+    @Select("select * from role where status=1")
+    public List<Role> queryGoodRoles();
+
+
+    @Select("select rid from userrole where uid =#{uid}")
+    public List<Integer> queryRolesById(Integer uid);
+
+
+
 
 
     /**

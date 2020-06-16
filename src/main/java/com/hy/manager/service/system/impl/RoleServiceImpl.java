@@ -28,6 +28,16 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
     }
 
     @Override
+    public List<Role> queryGoodRoles() {
+        return roleMapper.queryGoodRoles();
+    }
+
+    @Override
+    public List<Integer> queryRolesById(Integer uid) {
+        return roleMapper.queryRolesById(uid);
+    }
+
+    @Override
     public Integer addRole(Role role) {
         return roleMapper.addRole(role);
     }

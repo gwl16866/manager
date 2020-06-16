@@ -16,6 +16,8 @@ import java.util.List;
 public interface IRoleService extends IService<Role> {
 
     public List<Role> queryRoles(String name);
+    public List<Role> queryGoodRoles();
+    public List<Integer> queryRolesById(Integer uid);
     public Integer addRole(Role role);
     public Integer updateRoleStatus(Role role);
     public Integer updateRoleName(Role role);

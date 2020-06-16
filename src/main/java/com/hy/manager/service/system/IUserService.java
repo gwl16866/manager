@@ -17,7 +17,7 @@ import java.util.List;
 public interface IUserService extends IService<User> {
 
     public List<User> listselect();
-    public void userupd(User user);
+    public void userupd(User user,String[] haveRoles);
     public void del(String uid);
     public void add(User user);
     public int count();

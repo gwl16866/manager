@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.hy.manager.Date.ResultData;
 import com.hy.manager.entity.product.ClassModel;
 import com.hy.manager.entity.system.Role;
+import com.hy.manager.mapper.system.RoleMapper;
 import com.hy.manager.service.system.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,6 +51,18 @@ public class RoleController {
 
     }
 
+    /**
+     * 查询所有可用角色
+     * @return
+     */
+    @RequestMapping("/queryGoodRoles")
+    public List<Role> queryGoodRoles(){
+        return roleService.queryGoodRoles();
+    }
+
+
+
+
 
     /**
      * 添加新角色
@@ -84,6 +97,14 @@ public class RoleController {
     }
 
 
+    /**
+     * 根据uid查询角色
+     * @return
+     */
+    @RequestMapping("/queryRolesById")
+    public List<Integer> queryRolesById(Integer uid){
+        return roleService.queryRolesById(uid);
+    }
 
 
 

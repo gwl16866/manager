@@ -1,5 +1,7 @@
 package com.hy.manager.mapper.system;
 
+import org.apache.ibatis.annotations.Param;
+
 public class RoleProvider {
 
 
@@ -16,6 +18,25 @@ public class RoleProvider {
         }
         return sb.toString();
     }
+
+
+    public String addUserRoles(@Param("uid") Integer uid, @Param("haveRoles") String []haveRoles){
+        StringBuffer sb = new StringBuffer();
+        sb.append("insert into userrole (uid,rid) values ");
+        for(int i=0;i<haveRoles.length;i++){
+            sb.append("(");
+            sb.append(uid+","+haveRoles[i]);
+            sb.append(")");
+            if(i<haveRoles.length-1){
+                sb.append(",");
+            }
+        }
+        return sb.toString();
+    }
+
+
+
+
 
 
 

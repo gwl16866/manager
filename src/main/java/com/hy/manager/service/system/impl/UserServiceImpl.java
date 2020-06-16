@@ -31,8 +31,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public void userupd(User user) {
+    public void userupd(User user,String[] haveRoles) {
+
         userMapper.userupd(user);
+        userMapper.addUserRoles(user.getUid(),haveRoles);
     }
 
     @Override

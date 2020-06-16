@@ -55,5 +55,10 @@ public interface UserMapper extends BaseMapper<User> {
     @Select("SELECT COUNT(*)val,DATE_FORMAT(insert_date,'%m') month FROM orders GROUP BY DATE_FORMAT(insert_date,'%Y%m') ORDER BY DATE_FORMAT(insert_date,'%Y%m')")
     public ArrayList<DeskPojo> selectShopping();
 
+    @InsertProvider(type = RoleProvider.class,method = "addUserRoles")
+    public Integer addUserRoles(@Param("uid") Integer uid,@Param("haveRoles") String[] haveRoles);
+
+
+
 
 }
