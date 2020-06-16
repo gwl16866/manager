@@ -3,6 +3,7 @@ package com.hy.manager.mapper.system;
 import com.hy.manager.entity.system.DeskPojo;
 import com.hy.manager.entity.system.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.hy.manager.mapper.customer.CustomerProvider;
 import org.apache.ibatis.annotations.*;
 
 import java.util.ArrayList;
@@ -19,8 +20,9 @@ import java.util.List;
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
 
-    @Select("select * from user where status=1")
-    public List<User> listselect();
+
+    @SelectProvider(type =UserProvider.class, method = "selectUser")
+    public List<User> listselect(User user);
 
     @Update("update user set userName=#{userName},password=#{password},sex=#{sex},phoneNo=#{phoneNo},email=#{email} where uid=#{uid} ")
     public void userupd(User user);

@@ -31,8 +31,8 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping("/listselect")
-    public List<User> listselect(){
-        return userService.listselect();
+    public List<User> listselect(User user){
+        return userService.listselect(user);
     }
 
     @RequestMapping("/userupd")
