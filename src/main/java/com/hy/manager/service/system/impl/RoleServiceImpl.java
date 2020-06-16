@@ -1,6 +1,7 @@
 package com.hy.manager.service.system.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hy.manager.entity.system.Permiss;
 import com.hy.manager.entity.system.Role;
 import com.hy.manager.mapper.system.RoleMapper;
 import com.hy.manager.service.system.IRoleService;
@@ -43,6 +44,19 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
     }
 
     @Override
+    public Integer deleteAndAddRolePerms(String[] havePerms, Integer rid) {
+        Integer i = roleMapper.deleteRolePermsByRid(rid);
+        Integer n = roleMapper.addRolePerms(havePerms,rid);
+        if(i >= 1 && n>= 1){
+            return 1;
+        }else{
+            return 0;
+        }
+
+
+    }
+
+    @Override
     public Integer updateRoleStatus(Role role) {
         return roleMapper.updateRoleStatus(role);
     }
@@ -50,5 +64,32 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
     @Override
     public Integer updateRoleName(Role role) {
         return roleMapper.updateRoleName(role);
+    }
+
+    @Override
+    public List<Permiss> queryFirstPermission() {
+        return roleMapper.queryFirstPermission();
+    }
+
+    @Override
+    public List<Permiss> secondThirdHand(Integer parentId) {
+        return roleMapper.secondThirdHand(parentId);
+    }
+
+    @Override
+    public List<Permiss> recursionHands(List<Permiss> list) {
+        if(null != list && !list.isEmpty()){
+            for(Permiss firstHands:list){
+                List<Permiss> secondList=secondThirdHand(firstHands.getPid());
+                firstHands.setRolesList(secondList);
+                recursionHands(secondList);
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public List<Integer> roleHaveHand(Integer rid) {
+        return roleMapper.roleHaveHand(rid);
     }
 }

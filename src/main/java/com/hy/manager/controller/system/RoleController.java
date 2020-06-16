@@ -4,15 +4,19 @@ package com.hy.manager.controller.system;
 import com.github.pagehelper.PageHelper;
 import com.hy.manager.Date.ResultData;
 import com.hy.manager.entity.product.ClassModel;
+import com.hy.manager.entity.system.Permiss;
 import com.hy.manager.entity.system.Role;
+import com.hy.manager.entity.system.RoleData;
 import com.hy.manager.mapper.system.RoleMapper;
 import com.hy.manager.service.system.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -105,6 +109,38 @@ public class RoleController {
     public List<Integer> queryRolesById(Integer uid){
         return roleService.queryRolesById(uid);
     }
+
+
+    /**
+     * 查询全部权限 以及 角色权限
+     * @param rid
+     * @return
+     */
+    @RequestMapping("/queryRolePerms")
+    public RoleData setRolePerms(Integer rid) {
+        RoleData roleData = new RoleData();
+        //装全部权限
+        List<Permiss> list = new ArrayList<>();
+        //查询一级权限
+        List<Permiss> first = roleService.queryFirstPermission();
+        //递归查询 二三级 权限
+        if(first.size()>0 && !first.isEmpty()){
+            list =  roleService.recursionHands(first);
+        }
+        //根据rid查角色权限
+        List<Integer> roleHavePerms = roleService.roleHaveHand(rid);
+
+        roleData.setAllPerms(list);
+        roleData.setHavePerms(roleHavePerms);
+        return roleData;
+    }
+
+
+    @RequestMapping("/deleteRolePermsByRid")
+    public Integer deleteRolePermsByRid(String[] havePerms,Integer rid){
+      return  roleService.deleteAndAddRolePerms(havePerms,rid);
+    }
+
 
 
 
