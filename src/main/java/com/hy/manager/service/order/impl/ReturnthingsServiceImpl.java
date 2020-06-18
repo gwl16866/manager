@@ -58,7 +58,7 @@ public class ReturnthingsServiceImpl extends ServiceImpl<ReturnthingsMapper, Ret
 
 
     //新增秒杀
-    public void addSeckill(Seckill seckill) {
+    public void addSeckill(SeckillTwo seckill) {
         returnthingsMapper.addSeckill(seckill);
     }
 

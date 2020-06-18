@@ -4,6 +4,7 @@ package com.hy.manager.controller.product;
 import com.github.pagehelper.PageHelper;
 import com.hy.manager.Date.ResultData;
 import com.hy.manager.entity.product.*;
+import com.hy.manager.mapper.product.ProductMapper;
 import com.hy.manager.service.product.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
@@ -29,6 +30,8 @@ import java.util.UUID;
 public class ProductController {
     @Autowired
     private IProductService productService;
+    @Autowired
+    private ProductMapper productMapper;
 
     /**
      * 查询商品列表
@@ -74,6 +77,27 @@ public class ProductController {
      */
     @PostMapping("/updateProduct")
     public boolean updateProduct(Product product){
+
+       Product product1 = productService.queryProductById(product.getPid());
+
+       //减库存
+       if(product1.getCounts() > product.getCounts()){
+           //添加订单 减库存
+           productMapper.addOrders(product1.getCounts()-product.getCounts());
+           Integer maxOrderId = productMapper.maxOrderId();
+           //库存记录
+           productMapper.addCounts(product.getPid(),maxOrderId,product.getCounts(),4,1);
+       }else if(product1.getCounts() < product.getCounts()){
+           //加库存
+           productMapper.addOrders(product.getCounts()-product1.getCounts());
+           Integer maxOrderId = productMapper.maxOrderId();
+           //库存记录
+           productMapper.addCounts(product.getPid(),maxOrderId,product.getCounts(),2,1);
+
+       }else{
+
+           System.out.println("相等 不插入库存记录");
+       }
         return  productService.saveOrUpdate(product);
     }
 

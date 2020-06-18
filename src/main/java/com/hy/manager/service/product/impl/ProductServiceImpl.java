@@ -144,7 +144,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
             Integer maxOrderId = productMapper.maxOrderId();
             Integer pid = productMapper.maxPid();
             //添加库存记录
-            productMapper.addCounts(pid,maxOrderId,productList.get(i).getCounts(),1);
+            productMapper.addCounts(pid,maxOrderId,productList.get(i).getCounts(),2,1);
         }
 
 

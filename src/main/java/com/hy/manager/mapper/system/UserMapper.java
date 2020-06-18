@@ -65,4 +65,8 @@ public interface UserMapper extends BaseMapper<User> {
     public Integer deleteUserRoles(Integer uid);
 
 
+    @Select("select * from user where userName=#{userName}")
+    public User login(String userName);
+
+
 }

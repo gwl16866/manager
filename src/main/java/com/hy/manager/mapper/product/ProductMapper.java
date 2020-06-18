@@ -173,7 +173,7 @@ public interface ProductMapper extends BaseMapper<Product> {
      * @param counts
      * @return
      */
-    @Insert("insert into orders(counts) values(#{counts})")
+    @Insert("insert into orders(ocounts) values(#{counts})")
     public Integer addOrders(Integer counts);
 
 
@@ -198,7 +198,7 @@ public interface ProductMapper extends BaseMapper<Product> {
      * @param userId
      * @return
      */
-    @Insert("insert into quantity(productId,orderId,count,userId,controlClass,status) values(#{productId},#{orderId},#{productCount},#{userId},2,2)")
-    public Integer addCounts(Integer productId,Integer orderId,Integer productCount,Integer userId);
+    @Insert("insert into quantity(productId,orderId,count,userId,controlClass,status) values(#{productId},#{orderId},#{productCount},#{userId},#{controlClass},2)")
+    public Integer addCounts(Integer productId,Integer orderId,Integer productCount,Integer controlClass,Integer userId);
 
 }

@@ -47,7 +47,7 @@ public interface ReturnthingsMapper extends BaseMapper<Returnthings> {
 
     //新增
     @Insert("insert into seckill(title,status,starTime,endTime,putOrNot,seckillStarTime,seckillEndTime) values(#{title},1,#{starTime},#{endTime},1,#{seckillStarTime},#{seckillEndTime})")
-    public void addSeckill(Seckill seckill);
+    public void addSeckill(SeckillTwo seckill);
 
     //商品条数
     @Select("select count(seckillId) from product where seckillId=#{seckillId}")

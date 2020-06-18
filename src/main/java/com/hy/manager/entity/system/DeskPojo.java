@@ -1,7 +1,10 @@
 package com.hy.manager.entity.system;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
+@Data
 public class DeskPojo implements Serializable {
     private String month;
     private String val;
