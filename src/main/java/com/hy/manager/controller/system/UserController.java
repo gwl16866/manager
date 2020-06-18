@@ -70,13 +70,13 @@ public class UserController {
     }
 
     @CrossOrigin
-    @RequestMapping("/sales")
+    @RequestMapping("/sale")
     public int sales(){
         return userService.sales();
     }
 
     @CrossOrigin
-    @RequestMapping("/ordercount")
+    @RequestMapping("/ordercounts")
     public int ordercount(){
         return userService.ordercount();
     }
