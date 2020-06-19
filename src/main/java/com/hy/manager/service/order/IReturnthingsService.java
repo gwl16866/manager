@@ -36,7 +36,7 @@ public interface IReturnthingsService extends IService<Returnthings> {
     public void putOrNot(Integer seckillId,Integer putOrNot);
 
     //新增秒杀活动
-    public void addSeckill(Seckill seckill);
+    public void addSeckill(SeckillTwo seckill);
 
 
     //商品数量

@@ -29,19 +29,20 @@ public class UserController {
     @Resource
     private IUserService userService;
 
+    @CrossOrigin
     @ResponseBody
     @RequestMapping("/listselect")
     public List<User> listselect(User user){
         return userService.listselect(user);
     }
 
+    @CrossOrigin
     @RequestMapping("/userupd")
     public void userupd(User user,String[] haveRoles){
         userService.userupd(user,haveRoles);
     }
 
-
-
+    @CrossOrigin
     @RequestMapping("/del")
     public String del(String uid){
         System.out.println(uid);
@@ -49,32 +50,38 @@ public class UserController {
         return "0";
     }
 
+    @CrossOrigin
     @RequestMapping("/add")
     public String add(User user){
         userService.add(user);
         return "0";
     }
 
+    @CrossOrigin
     @RequestMapping("/count")
     public int count(){
        return userService.count();
     }
 
+    @CrossOrigin
     @RequestMapping("/returnmoney")
     public int returnmoney(){
         return userService.returnmonry();
     }
 
-    @RequestMapping("/sales")
+    @CrossOrigin
+    @RequestMapping("/sale")
     public int sales(){
         return userService.sales();
     }
 
-    @RequestMapping("/ordercount")
+    @CrossOrigin
+    @RequestMapping("/ordercounts")
     public int ordercount(){
         return userService.ordercount();
     }
 
+    @CrossOrigin
     @RequestMapping("/selectFour")
     public FourObject selectFour() {
         FourObject fo = new FourObject();

@@ -149,7 +149,7 @@ public class ReturnthingsController {
     //新增秒杀活动
     @ResponseBody
     @RequestMapping("/addSeckill")
-    public Integer addSeckill(Seckill seckill) {
+    public Integer addSeckill(SeckillTwo seckill) {
         try {
             iReturnthingsService.addSeckill(seckill);
         } catch (Exception e) {

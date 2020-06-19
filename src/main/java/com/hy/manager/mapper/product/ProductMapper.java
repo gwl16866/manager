@@ -168,5 +168,37 @@ public interface ProductMapper extends BaseMapper<Product> {
     @Select("select count(*) from product where productNumber = #{num}")
     public Integer queryPNum(String num);
 
+    /**
+     * 添加一条订单
+     * @param counts
+     * @return
+     */
+    @Insert("insert into orders(ocounts) values(#{counts})")
+    public Integer addOrders(Integer counts);
+
+
+    /**
+     *查询最大orderid
+     */
+    @Select("select max(id) from orders")
+    public Integer maxOrderId();
+
+    /**
+     *查询最大商品id
+     */
+    @Select("select max(pid) from product")
+    public Integer maxPid();
+
+
+    /**
+     * 添加库存记录
+     * @param productId
+     * @param orderId
+     * @param productCount
+     * @param userId
+     * @return
+     */
+    @Insert("insert into quantity(productId,orderId,count,userId,controlClass,status) values(#{productId},#{orderId},#{productCount},#{userId},#{controlClass},2)")
+    public Integer addCounts(Integer productId,Integer orderId,Integer productCount,Integer controlClass,Integer userId);
 
 }

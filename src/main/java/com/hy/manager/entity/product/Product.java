@@ -32,50 +32,79 @@ public class Product implements Serializable {
     @TableField("productName")
     private String productName;
 
+    @TableField("price")
     private BigDecimal price;
 
     @TableField("productNumber")
     private String productNumber;
+
     @TableField("sellVolume")
     private Integer sellVolume;
 
+    @TableField("status")
     private Integer status;
+
     @TableField("upStatus")
     private Integer upStatus;
 
+    @TableField("image")
     private String image;
+
     @TableField("productModel")
     private String productModel;
+
+
     @TableField("productColor")
     private String productColor;
 
     @TableField("marketDate")
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
     @DateTimeFormat(pattern = "yyyy-MM-dd")//前端到后端
-    private Date marketDate;
+    private String marketDate;
+
     @TableField("productMaterials")
     private String productMaterials;
+
     @TableField("productUser")
     private String productUser;
 
+    @TableField(exist = false)
     private Integer images;
 
+    @TableField("classes")
     private Integer classes;
+
+    @TableField("counts")
+    private Integer counts;
+
+    @TableField("alarmCount")
+    private Integer alarmCount;
+
     @TableField(value = "className",exist = false)
     private String className;
+
+
+
+
     @TableField("isShow")
     private Integer isShow;
+
+
     @TableField(value = "addList",exist = false)
     private List<AddProduct> addList;
 
     @TableField("seckillPrice")
     private BigDecimal seckillPrice;
+
     @TableField("seckillNumber")
     private Integer seckillNumber;
+
     @TableField("residueNumber")
     private Integer residueNumber;
+
     @TableField("purchaseNumber")
     private Integer purchaseNumber;
+
     @TableField("seckillId")
     private Integer seckillId;
 }

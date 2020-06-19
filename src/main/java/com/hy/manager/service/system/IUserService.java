@@ -28,5 +28,6 @@ public interface IUserService extends IService<User> {
     public ArrayList<String> selectMessage();
     public ArrayList<String> selectMoney();
     public ArrayList<String> selectShopping();
+    public User login(String userName);
 
 }

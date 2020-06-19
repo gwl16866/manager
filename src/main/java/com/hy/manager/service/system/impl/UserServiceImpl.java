@@ -223,4 +223,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         arr.add(6,dm.getSeven());
         return arr;
     }
+
+    @Override
+    public User login(String userName) {
+        return userMapper.login(userName);
+    }
 }
