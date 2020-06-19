@@ -48,13 +48,13 @@ public interface UserMapper extends BaseMapper<User> {
     @Select("SELECT COUNT(*) val,DATE_FORMAT(insert_date,'%m') month FROM user GROUP BY DATE_FORMAT(insert_date,'%Y%m')ORDER BY DATE_FORMAT(insert_date,'%Y%m')")
     public ArrayList<DeskPojo> selectSumUsers();
 
-    @Select("SELECT COUNT(*)val,DATE_FORMAT(insert_date,'%m') month FROM returnmoney GROUP BY DATE_FORMAT(insert_date,'%Y%m') ORDER BY DATE_FORMAT(insert_date,'%Y%m')")
+    @Select("SELECT COUNT(*)val,DATE_FORMAT(applyTime,'%m') month FROM returnmoney GROUP BY DATE_FORMAT(applyTime,'%Y%m') ORDER BY DATE_FORMAT(applyTime,'%Y%m')")
     public ArrayList<DeskPojo> selectMessage();
 
-    @Select("SELECT sum(sumMoney) val,DATE_FORMAT(insert_date,'%m') month FROM orders GROUP BY DATE_FORMAT(insert_date,'%Y%m') ORDER BY DATE_FORMAT(insert_date,'%Y%m')")
+    @Select("SELECT sum(sumMoney) val,DATE_FORMAT(submitDate,'%m') month FROM orders GROUP BY DATE_FORMAT(submitDate,'%Y%m') ORDER BY DATE_FORMAT(submitDate,'%Y%m')")
     public ArrayList<DeskPojo> selectMoney();
 
-    @Select("SELECT COUNT(*)val,DATE_FORMAT(insert_date,'%m') month FROM orders GROUP BY DATE_FORMAT(insert_date,'%Y%m') ORDER BY DATE_FORMAT(insert_date,'%Y%m')")
+    @Select("SELECT COUNT(*)val,DATE_FORMAT(submitDate,'%m') month FROM orders GROUP BY DATE_FORMAT(submitDate,'%Y%m') ORDER BY DATE_FORMAT(submitDate,'%Y%m')")
     public ArrayList<DeskPojo> selectShopping();
 
     @InsertProvider(type = RoleProvider.class,method = "addUserRoles")
