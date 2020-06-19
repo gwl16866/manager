@@ -94,19 +94,26 @@ public class ReturnthingsController {
     @ResponseBody
     @RequestMapping("/selectSeckill")
     public ResultData selectSeckill(@RequestParam("currentPage") int currentPage,
-                                    @RequestParam("pageSize") int pageSize, Seckill seckill) {
+                                    @RequestParam("pageSize") int pageSize, Seckill seckill,SeckillTwo seckillTwo) {
         ResultData resultData = new ResultData();
         List<Seckill> seckillListSize = iReturnthingsService.selectSeckill(seckill);
 
+        PageHelper.startPage(currentPage, pageSize);
+        List<SeckillTwo> seckillList = iReturnthingsService.selectSeckillTwo(seckill);
+
+
+        //查询条数
+        for (SeckillTwo ab : seckillList) {
+            if (null == ab.getProductCounts() || "".equals(ab.getProductCounts())) {
+                ab.setCounts(0);
+             } else{
+                Integer i = (ab.getProductCounts().length() + 1) / 2;
+               ab.setCounts(i);
+            }
+        }
+
         //查询条数
         for (Seckill a : seckillListSize) {
-            if (a.getProductCounts() == null) {
-                a.setCounts(0);
-            } else {
-                Integer i = (a.getProductCounts().length() + 1) / 2;
-                a.setCounts(i);
-            }
-
             //判断是否结束
             Date date = new Date();
             if (date.compareTo(a.getStarTime()) > 0 && date.compareTo(a.getEndTime()) <0) {
@@ -114,19 +121,13 @@ public class ReturnthingsController {
                 a.setStatus(1);
                 iReturnthingsService.updateStatus(a.getSeckillId(), a.getStatus(), a.getPutOrNot());
             } else {
-
                 SimpleDateFormat s = new SimpleDateFormat("HH:mm:ss");
                 a.setStatus(2);
                 a.setPutOrNot(2);
-
                 //修改状态
                 iReturnthingsService.updateStatus(a.getSeckillId(), a.getStatus(), a.getPutOrNot());
             }
         }
-
-        PageHelper.startPage(currentPage, pageSize);
-        List<SeckillTwo> seckillList = iReturnthingsService.selectSeckillTwo(seckill);
-
 
         resultData.setDataSize(seckillListSize.size());
         resultData.setData(seckillList);
